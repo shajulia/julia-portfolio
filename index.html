@@ -149,6 +149,15 @@
       .hero-eyebrow { justify-content: center; }
       .hero-tagline { margin: 0 auto 2.5rem; }
       .hero-visual { display: none; }
+
+    .hero-visual-mobile { display: none; }
+
+    @media (max-width: 900px) {
+      .hero-visual { display: none; }
+      .hero-visual-mobile { display: block; margin-top: 2rem; padding-bottom: 4rem; }
+      .hero-visual-mobile .avatar-ring { width: 200px; margin: 0 auto; aspect-ratio: 3/4; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 20px 50px rgba(26,46,28,.2); }
+      .hero-visual-mobile .avatar-ring img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    }
       .section { padding: 5rem 2rem; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .edu-grid { grid-template-columns: 1fr; }
@@ -189,6 +198,11 @@
       <div class="float-badge float-badge-2"><span class="badge-dot"></span>教育 · 技术 · 创意</div>
     </div>
     <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+    <div class="hero-visual-mobile">
+      <div class="avatar-ring">
+        <img src="julia_LA.jpg" alt="Julia Sha" />
+      </div>
+    </div>
   </section>
 
   <!-- ABOUT -->
@@ -440,7 +454,7 @@
         juliasha2024@gmail.com
       </a>
       <a href="#" class="contact-link">
-        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="1" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M4 7h6M4        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="1" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M4 7h6M4 4.5h6M4 9.5h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="1" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M4 7h6M4 4.5h6M4 9.5h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         WeChat: s1637545073
       </a>
     </div>
