@@ -23,11 +23,17 @@
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 1.6rem 4rem; transition: background .4s, padding .4s; }
     nav.scrolled { background: rgba(247,244,239,.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1rem 4rem; box-shadow: 0 1px 0 rgba(26,46,28,.08); }
     .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 500; letter-spacing: .06em; color: var(--ink); text-decoration: none; }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
     .nav-links a { font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; position: relative; transition: color .25s; }
     .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width .3s; }
     .nav-links a:hover { color: var(--ink); }
     .nav-links a:hover::after { width: 100%; }
+
+    /* Language Toggle */
+    .lang-toggle { display: flex; align-items: center; gap: 0; border: 1px solid rgba(26,46,28,.2); border-radius: 100px; overflow: hidden; font-size: .7rem; letter-spacing: .1em; cursor: pointer; }
+    .lang-toggle button { background: none; border: none; padding: .35rem .75rem; cursor: pointer; font-family: 'DM Mono', monospace; font-size: .7rem; letter-spacing: .1em; color: var(--ink-mid); transition: background .25s, color .25s; }
+    .lang-toggle button.active { background: var(--ink); color: var(--bg); }
+    .lang-toggle button:hover:not(.active) { background: var(--bg-alt); }
 
     /* Hero */
     .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 0 4rem; position: relative; overflow: hidden; }
@@ -163,11 +169,17 @@
   <nav id="navbar">
     <a href="#" class="nav-logo">Julia Sha</a>
     <ul class="nav-links">
-      <li><a href="#about">关于</a></li>
-      <li><a href="#education">教育</a></li>
-      <li><a href="#experience">经历</a></li>
-      <li><a href="#skills">技能</a></li>
-      <li><a href="#contact">联系</a></li>
+      <li><a href="#about" data-zh="关于" data-en="About">关于</a></li>
+      <li><a href="#education" data-zh="教育" data-en="Education">教育</a></li>
+      <li><a href="#experience" data-zh="经历" data-en="Experience">经历</a></li>
+      <li><a href="#skills" data-zh="技能" data-en="Skills">技能</a></li>
+      <li><a href="#contact" data-zh="联系" data-en="Contact">联系</a></li>
+      <li>
+        <div class="lang-toggle">
+          <button id="btn-zh" class="active" onclick="setLang('zh')">ZH</button>
+          <button id="btn-en" onclick="setLang('en')">EN</button>
+        </div>
+      </li>
     </ul>
   </nav>
 
@@ -176,15 +188,15 @@
     <div class="hero-text">
       <div class="hero-eyebrow mono">Learning Design · Innovation · Technology</div>
       <h1><span class="hero-name-en">Julia Sha</span><br/><span class="chinese-name">沙雨薇</span></h1>
-      <p class="hero-tagline">哈佛大学 Learning Design, Innovation &amp; Technology 硕士候选人，致力于在教育、科技与创意之间探索有意义的连接。</p>
-      <a href="#contact" class="hero-cta">联系我 <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l5 4-5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <p class="hero-tagline" data-zh="哈佛大学 Learning Design, Innovation &amp; Technology 硕士候选人，致力于在教育、科技与创意之间探索有意义的连接。" data-en="Master of Education candidate at Harvard University (Learning Design, Innovation &amp; Technology), dedicated to building meaningful connections between education, technology, and creativity.">哈佛大学 Learning Design, Innovation &amp; Technology 硕士候选人，致力于在教育、科技与创意之间探索有意义的连接。</p>
+      <a href="#contact" class="hero-cta" data-zh="联系我" data-en="Get in Touch">联系我 <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l5 4-5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
     <div class="hero-visual">
       <div class="avatar-ring">
         <img src="julia_LA.jpg" alt="Julia Sha" />
       </div>
       <div class="float-badge float-badge-1"><span class="badge-dot"></span>Harvard University 2025–2026</div>
-      <div class="float-badge float-badge-2"><span class="badge-dot"></span>教育 · 技术 · 创意</div>
+      <div class="float-badge float-badge-2" data-zh="教育 · 技术 · 创意" data-en="Education · Tech · Creativity"><span class="badge-dot"></span>教育 · 技术 · 创意</div>
     </div>
     <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
     <div class="hero-visual-mobile">
@@ -196,29 +208,29 @@
 
   <!-- ABOUT -->
   <section class="section" id="about">
-    <div class="section-label mono"><span>01</span> 关于我</div>
+    <div class="section-label mono"><span>01</span> <span data-zh="关于我" data-en="About Me">关于我</span></div>
     <div class="about-grid">
       <div class="about-text reveal">
-        <p>我是一个在跨文化语境中成长起来的学习设计探索者。从清华的国际关系到哈佛的 Learning Design，我的学术轨迹始终围绕一个核心问题：如何通过设计的力量，让学习更有意义、更有温度？</p>
-        <p>我相信教育不只是传授知识，更是激发可能性。这种信念驱动我从戏剧工作坊到 AI 内容策略，从 TEDx 舞台到特斯拉的公益现场，持续在不同领域验证自己的判断力与执行力。</p>
-        <p>我正在寻找能够将教育创新、技术应用与内容传播结合的实习与项目机会。如果你也在做有意思的事，我很愿意认识你。</p>
+        <p data-zh="我是一个在跨文化语境中成长起来的学习设计探索者。从清华的国际关系到哈佛的 Learning Design，我的学术轨迹始终围绕一个核心问题：如何通过设计的力量，让学习更有意义、更有温度？" data-en="I am a learning design explorer who grew up across cultures. From International Relations at Tsinghua to Learning Design at Harvard, my academic journey has always centered on one core question: how can the power of design make learning more meaningful and human?">我是一个在跨文化语境中成长起来的学习设计探索者。从清华的国际关系到哈佛的 Learning Design，我的学术轨迹始终围绕一个核心问题：如何通过设计的力量，让学习更有意义、更有温度？</p>
+        <p data-zh="我相信教育不只是传授知识，更是激发可能性。这种信念驱动我从戏剧工作坊到 AI 内容策略，从 TEDx 舞台到特斯拉的公益现场，持续在不同领域验证自己的判断力与执行力。" data-en="I believe education is not just about transferring knowledge — it's about igniting possibility. This belief has driven me from drama workshops to AI content strategy, from TEDx stages to Tesla's community initiatives, continuously testing my judgment and execution across diverse fields.">我相信教育不只是传授知识，更是激发可能性。这种信念驱动我从戏剧工作坊到 AI 内容策略，从 TEDx 舞台到特斯拉的公益现场，持续在不同领域验证自己的判断力与执行力。</p>
+        <p data-zh="我正在寻找能够将教育创新、技术应用与内容传播结合的实习与项目机会。如果你也在做有意思的事，我很愿意认识你。" data-en="I am looking for internship and project opportunities that combine educational innovation, technology application, and content communication. If you're working on something interesting, I'd love to connect.">我正在寻找能够将教育创新、技术应用与内容传播结合的实习与项目机会。如果你也在做有意思的事，我很愿意认识你。</p>
       </div>
       <div class="about-stats stagger">
         <div class="stat-card reveal">
           <div class="stat-num">5+</div>
-          <div class="stat-label">实习经历</div>
+          <div class="stat-label" data-zh="实习经历" data-en="Internships">实习经历</div>
         </div>
         <div class="stat-card reveal">
           <div class="stat-num">40+</div>
-          <div class="stat-label">KOL 管理</div>
+          <div class="stat-label" data-zh="KOL 管理" data-en="KOLs Managed">KOL 管理</div>
         </div>
         <div class="stat-card reveal">
           <div class="stat-num">15+</div>
-          <div class="stat-label">GEO 文章</div>
+          <div class="stat-label" data-zh="GEO 文章" data-en="GEO Articles">GEO 文章</div>
         </div>
         <div class="stat-card reveal">
           <div class="stat-num">2</div>
-          <div class="stat-label">顶尖学位</div>
+          <div class="stat-label" data-zh="顶尖学位" data-en="Top Degrees">顶尖学位</div>
         </div>
       </div>
     </div>
@@ -227,28 +239,28 @@
   <!-- EDUCATION -->
   <section class="section edu-section" id="education">
     <div class="section-label mono"><span>02</span> Education</div>
-    <h2 class="reveal">学术背景</h2>
+    <h2 class="reveal" data-zh="学术背景" data-en="Academic Background">学术背景</h2>
     <br/>
     <div class="edu-grid">
       <div class="edu-card reveal">
         <div class="edu-school">Harvard University</div>
         <div class="edu-degree">Master of Education<br/>Learning Design, Innovation &amp; Technology</div>
-        <div class="edu-period">2025 年 8 月 — 2026 年 5 月</div>
+        <div class="edu-period" data-zh="2025 年 8 月 — 2026 年 5 月" data-en="Aug 2025 — May 2026">2025 年 8 月 — 2026 年 5 月</div>
         <ul class="edu-honors">
           <li>Graduate School of Education</li>
-          <li>研究方向：学习体验设计、教育技术</li>
+          <li data-zh="研究方向：学习体验设计、教育技术" data-en="Focus: Learning Experience Design, Educational Technology">研究方向：学习体验设计、教育技术</li>
         </ul>
       </div>
       <div class="edu-card reveal">
         <div class="edu-school">Tsinghua University</div>
         <div class="edu-degree">Bachelor of Law &amp; International Relations<br/>School of Social Sciences</div>
-        <div class="edu-period">2020 年 9 月 — 2025 年 6 月 · GPA 3.63/4.0</div>
+        <div class="edu-period" data-zh="2020 年 9 月 — 2025 年 6 月 · GPA 3.63/4.0" data-en="Sep 2020 — Jun 2025 · GPA 3.63/4.0">2020 年 9 月 — 2025 年 6 月 · GPA 3.63/4.0</div>
         <ul class="edu-honors">
-          <li>北京外国留学生奖学金（2021, 2022）</li>
-          <li>清华大学文艺奖学金（2021, 2022）</li>
-          <li>清华大学社会实践铜奖（2021）</li>
-          <li>加拿大青少年慈善小姐（2018–2019）</li>
-          <li>美洲青少年论坛演讲嘉宾 · 萨尔瓦多</li>
+          <li data-zh="北京外国留学生奖学金（2021, 2022）" data-en="Beijing International Student Scholarship (2021, 2022)">北京外国留学生奖学金（2021, 2022）</li>
+          <li data-zh="清华大学文艺奖学金（2021, 2022）" data-en="Tsinghua University Arts Scholarship (2021, 2022)">清华大学文艺奖学金（2021, 2022）</li>
+          <li data-zh="清华大学社会实践铜奖（2021）" data-en="Tsinghua Social Practice Bronze Award (2021)">清华大学社会实践铜奖（2021）</li>
+          <li data-zh="加拿大青少年慈善小姐（2018–2019）" data-en="Miss Teen Charity Canada (2018–2019)">加拿大青少年慈善小姐（2018–2019）</li>
+          <li data-zh="美洲青少年论坛演讲嘉宾 · 萨尔瓦多" data-en="Youth Forum Speaker, Americas · El Salvador">美洲青少年论坛演讲嘉宾 · 萨尔瓦多</li>
         </ul>
       </div>
     </div>
@@ -257,102 +269,102 @@
   <!-- EXPERIENCE -->
   <section class="section" id="experience">
     <div class="section-label mono"><span>03</span> Experience</div>
-    <h2 class="reveal">实习经历</h2>
+    <h2 class="reveal" data-zh="实习经历" data-en="Work Experience">实习经历</h2>
     <br/>
     <div class="exp-list">
       <div class="exp-item reveal">
         <div class="exp-meta">
           <div class="exp-company">Indievolve</div>
-          <div class="exp-role">HR &amp; Business Operations</div>
-          <div class="exp-period">2025 — 至今</div>
+          <div class="exp-role" data-zh="HR &amp; 业务运营" data-en="HR &amp; Business Operations">HR &amp; Business Operations</div>
+          <div class="exp-period" data-zh="2025 — 至今" data-en="2025 — Present">2025 — 至今</div>
           <div class="exp-dots"><div class="exp-dot"></div><div class="exp-dot"></div><div class="exp-dot"></div></div>
         </div>
         <div class="exp-content">
-          <h3>个性化进化 · HR 全周期实践</h3>
+          <h3 data-zh="个性化进化 · HR 全周期实践" data-en="Personalized Evolution · Full-Cycle HR">个性化进化 · HR 全周期实践</h3>
           <ul class="exp-bullets">
-            <li>全周期招聘支持，筛选50+份简历，覆盖技术与非技术岗位</li>
-            <li>协调安排20+场面试（笔试至终面），提升候选人体验</li>
-            <li>作为主要负责人策划哈佛 CES 校园招聘会，统筹展位与宣讲</li>
-            <li>Inspire Class 公益项目负责人，为偏远地区学生提供咨询辅导</li>
+            <li data-zh="全周期招聘支持，筛选50+份简历，覆盖技术与非技术岗位" data-en="Full-cycle recruiting support, screened 50+ resumes across technical and non-technical roles">全周期招聘支持，筛选50+份简历，覆盖技术与非技术岗位</li>
+            <li data-zh="协调安排20+场面试（笔试至终面），提升候选人体验" data-en="Coordinated 20+ interviews (written tests to final rounds), improving candidate experience">协调安排20+场面试（笔试至终面），提升候选人体验</li>
+            <li data-zh="作为主要负责人策划哈佛 CES 校园招聘会，统筹展位与宣讲" data-en="Led Harvard CES campus recruiting event as primary organizer, coordinating booth and presentations">作为主要负责人策划哈佛 CES 校园招聘会，统筹展位与宣讲</li>
+            <li data-zh="Inspire Class 公益项目负责人，为偏远地区学生提供咨询辅导" data-en="Led Inspire Class nonprofit initiative, providing mentorship to students in underserved communities">Inspire Class 公益项目负责人，为偏远地区学生提供咨询辅导</li>
           </ul>
         </div>
       </div>
       <div class="exp-item reveal">
         <div class="exp-meta">
           <div class="exp-company">Citable · GEO</div>
-          <div class="exp-role">生成式引擎优化实习生</div>
-          <div class="exp-period">2026 年 1 月 — 3 月</div>
+          <div class="exp-role" data-zh="生成式引擎优化实习生" data-en="Generative Engine Optimization Intern">生成式引擎优化实习生</div>
+          <div class="exp-period" data-zh="2026 年 1 月 — 3 月" data-en="Jan — Mar 2026">2026 年 1 月 — 3 月</div>
           <div class="exp-dots"><div class="exp-dot"></div><div class="exp-dot"></div><div class="exp-dot"></div></div>
         </div>
         <div class="exp-content">
-          <h3>AI 搜索内容策略</h3>
+          <h3 data-zh="AI 搜索内容策略" data-en="AI Search Content Strategy">AI 搜索内容策略</h3>
           <ul class="exp-bullets">
-            <li>撰写并优化15+篇 GEO 文章，成功植入 ChatGPT、Perplexity 等平台</li>
-            <li>主导客户沟通与策略解说，有效提升客户满意度与续约率</li>
-            <li>深入调研 DeepSeek 等国内 AI 搜索引擎，产出竞品分析报告</li>
+            <li data-zh="撰写并优化15+篇 GEO 文章，成功植入 ChatGPT、Perplexity 等平台" data-en="Wrote and optimized 15+ GEO articles, successfully cited by ChatGPT, Perplexity, and other AI platforms">撰写并优化15+篇 GEO 文章，成功植入 ChatGPT、Perplexity 等平台</li>
+            <li data-zh="主导客户沟通与策略解说，有效提升客户满意度与续约率" data-en="Led client communication and strategy presentations, improving satisfaction and renewal rates">主导客户沟通与策略解说，有效提升客户满意度与续约率</li>
+            <li data-zh="深入调研 DeepSeek 等国内 AI 搜索引擎，产出竞品分析报告" data-en="Researched domestic AI search engines including DeepSeek, producing competitive analysis reports">深入调研 DeepSeek 等国内 AI 搜索引擎，产出竞品分析报告</li>
           </ul>
         </div>
       </div>
       <div class="exp-item reveal">
         <div class="exp-meta">
           <div class="exp-company">The Inner Mountain Foundation</div>
-          <div class="exp-role">学习设计师 &amp; 组织发展</div>
-          <div class="exp-period">2024 年 9 月 — 12 月</div>
+          <div class="exp-role" data-zh="学习设计师 &amp; 组织发展" data-en="Learning Designer &amp; Org Development">学习设计师 &amp; 组织发展</div>
+          <div class="exp-period" data-zh="2024 年 9 月 — 12 月" data-en="Sep — Dec 2024">2024 年 9 月 — 12 月</div>
           <div class="exp-dots"><div class="exp-dot"></div><div class="exp-dot"></div><div class="exp-dot"></div></div>
         </div>
         <div class="exp-content">
-          <h3>戏剧与社区营造</h3>
+          <h3 data-zh="戏剧与社区营造" data-en="Drama &amp; Community Building">戏剧与社区营造</h3>
           <ul class="exp-bullets">
-            <li>设计并主持戏剧工作坊，通过故事讲述与互动活动营造支持性社区</li>
-            <li>结合 U 型理论与自我启示剧场，展现系统性策划与执行能力</li>
+            <li data-zh="设计并主持戏剧工作坊，通过故事讲述与互动活动营造支持性社区" data-en="Designed and facilitated drama workshops, building supportive communities through storytelling and interactive activities">设计并主持戏剧工作坊，通过故事讲述与互动活动营造支持性社区</li>
+            <li data-zh="结合 U 型理论与自我启示剧场，展现系统性策划与执行能力" data-en="Applied Theory U and Playback Theatre to demonstrate systematic planning and execution capabilities">结合 U 型理论与自我启示剧场，展现系统性策划与执行能力</li>
           </ul>
         </div>
       </div>
       <div class="exp-item reveal">
         <div class="exp-meta">
           <div class="exp-company">Tesla</div>
-          <div class="exp-role">对外事务实习生</div>
-          <div class="exp-period">2023 年 7 月 — 9 月</div>
+          <div class="exp-role" data-zh="对外事务实习生" data-en="External Affairs Intern">对外事务实习生</div>
+          <div class="exp-period" data-zh="2023 年 7 月 — 9 月" data-en="Jul — Sep 2023">2023 年 7 月 — 9 月</div>
           <div class="exp-dots"><div class="exp-dot"></div><div class="exp-dot"></div><div class="exp-dot"></div></div>
         </div>
         <div class="exp-content">
-          <h3>品牌传播与公益项目</h3>
+          <h3 data-zh="品牌传播与公益项目" data-en="Brand Communications &amp; CSR">品牌传播与公益项目</h3>
           <ul class="exp-bullets">
-            <li>拓展并维护40+位 KOL 关系，协助完成媒体访谈与内容策略</li>
-            <li>统筹特斯拉北京亦庄中心9周年媒体活动，确保活动顺利执行</li>
-            <li>独立策划并执行10+场社区慈善工作坊，推广可再生能源理念</li>
-            <li>参与 HICOOL 峰会执行，协助制定危机管理预案</li>
+            <li data-zh="拓展并维护40+位 KOL 关系，协助完成媒体访谈与内容策略" data-en="Developed and maintained relationships with 40+ KOLs, supporting media interviews and content strategy">拓展并维护40+位 KOL 关系，协助完成媒体访谈与内容策略</li>
+            <li data-zh="统筹特斯拉北京亦庄中心9周年媒体活动，确保活动顺利执行" data-en="Coordinated Tesla Beijing Yizhuang Center's 9th anniversary media event, ensuring smooth execution">统筹特斯拉北京亦庄中心9周年媒体活动，确保活动顺利执行</li>
+            <li data-zh="独立策划并执行10+场社区慈善工作坊，推广可再生能源理念" data-en="Independently planned and executed 10+ community charity workshops promoting renewable energy">独立策划并执行10+场社区慈善工作坊，推广可再生能源理念</li>
+            <li data-zh="参与 HICOOL 峰会执行，协助制定危机管理预案" data-en="Participated in HICOOL Summit execution, assisting in crisis management planning">参与 HICOOL 峰会执行，协助制定危机管理预案</li>
           </ul>
         </div>
       </div>
       <div class="exp-item reveal">
         <div class="exp-meta">
           <div class="exp-company">Perfect World Education</div>
-          <div class="exp-role">产品实习生</div>
-          <div class="exp-period">2024 年 8 月 — 9 月</div>
+          <div class="exp-role" data-zh="产品实习生" data-en="Product Intern">产品实习生</div>
+          <div class="exp-period" data-zh="2024 年 8 月 — 9 月" data-en="Aug — Sep 2024">2024 年 8 月 — 9 月</div>
           <div class="exp-dots"><div class="exp-dot"></div><div class="exp-dot"></div><div class="exp-dot"></div></div>
         </div>
         <div class="exp-content">
-          <h3>AI + 游戏教育产品</h3>
+          <h3 data-zh="AI + 游戏教育产品" data-en="AI + Game-Based Education">AI + 游戏教育产品</h3>
           <ul class="exp-bullets">
-            <li>参与阿里 AI 与游戏设计结合的创新课程项目，协调内容定制</li>
-            <li>引入即兴活动优化音乐课程体验，展现用户洞察与流程改进意识</li>
+            <li data-zh="参与阿里 AI 与游戏设计结合的创新课程项目，协调内容定制" data-en="Contributed to Alibaba AI and game design curriculum project, coordinating content customization">参与阿里 AI 与游戏设计结合的创新课程项目，协调内容定制</li>
+            <li data-zh="引入即兴活动优化音乐课程体验，展现用户洞察与流程改进意识" data-en="Introduced improvisational activities to enhance music curriculum experience, demonstrating user insight and process improvement">引入即兴活动优化音乐课程体验，展现用户洞察与流程改进意识</li>
           </ul>
         </div>
       </div>
       <div class="exp-item reveal">
         <div class="exp-meta">
           <div class="exp-company">Fortive · 福迪威</div>
-          <div class="exp-role">市场实习生</div>
-          <div class="exp-period">2023 年 3 月 — 6 月</div>
+          <div class="exp-role" data-zh="市场实习生" data-en="Marketing Intern">市场实习生</div>
+          <div class="exp-period" data-zh="2023 年 3 月 — 6 月" data-en="Mar — Jun 2023">2023 年 3 月 — 6 月</div>
           <div class="exp-dots"><div class="exp-dot"></div><div class="exp-dot"></div><div class="exp-dot"></div></div>
         </div>
         <div class="exp-content">
-          <h3>短视频营销 &amp; B2B 传播</h3>
+          <h3 data-zh="短视频营销 &amp; B2B 传播" data-en="Short Video Marketing &amp; B2B Communications">短视频营销 &amp; B2B 传播</h3>
           <ul class="exp-bullets">
-            <li>独立策划、拍摄、剪辑"Julia 的科普小课堂"，两月观看量超2000次</li>
-            <li>运用百度爱采购等 B2B 平台进行搜索引擎营销</li>
-            <li>通过内容策略优化，将社交媒体账号参与度提升15%</li>
+            <li data-zh="独立策划、拍摄、剪辑"Julia 的科普小课堂"，两月观看量超2000次" data-en="Independently planned, filmed, and edited 'Julia's Science Class', reaching 2,000+ views in two months">独立策划、拍摄、剪辑"Julia 的科普小课堂"，两月观看量超2000次</li>
+            <li data-zh="运用百度爱采购等 B2B 平台进行搜索引擎营销" data-en="Leveraged B2B platforms including Baidu Aicaigou for search engine marketing">运用百度爱采购等 B2B 平台进行搜索引擎营销</li>
+            <li data-zh="通过内容策略优化，将社交媒体账号参与度提升15%" data-en="Improved social media account engagement by 15% through content strategy optimization">通过内容策略优化，将社交媒体账号参与度提升15%</li>
           </ul>
         </div>
       </div>
@@ -362,70 +374,70 @@
   <!-- SKILLS -->
   <section class="section skills-section" id="skills">
     <div class="section-label mono"><span>04</span> Skills</div>
-    <h2 class="reveal">核心能力</h2>
+    <h2 class="reveal" data-zh="核心能力" data-en="Core Skills">核心能力</h2>
     <br/>
     <div class="skills-grid stagger">
       <div class="skill-card reveal">
         <div class="skill-icon">🌐</div>
-        <h3>语言能力</h3>
+        <h3 data-zh="语言能力" data-en="Languages">语言能力</h3>
         <div class="skill-tags">
-          <span class="skill-tag">普通话（母语）</span>
-          <span class="skill-tag">英语（母语）</span>
+          <span class="skill-tag" data-zh="普通话（母语）" data-en="Mandarin (Native)">普通话（母语）</span>
+          <span class="skill-tag" data-zh="英语（母语）" data-en="English (Native)">英语（母语）</span>
         </div>
       </div>
       <div class="skill-card reveal">
         <div class="skill-icon">⚡</div>
-        <h3>数字营销</h3>
+        <h3 data-zh="数字营销" data-en="Digital Marketing">数字营销</h3>
         <div class="skill-tags">
           <span class="skill-tag">GEO / AIO</span>
-          <span class="skill-tag">内容策略</span>
-          <span class="skill-tag">KOL 管理</span>
-          <span class="skill-tag">社交媒体增长</span>
+          <span class="skill-tag" data-zh="内容策略" data-en="Content Strategy">内容策略</span>
+          <span class="skill-tag" data-zh="KOL 管理" data-en="KOL Management">KOL 管理</span>
+          <span class="skill-tag" data-zh="社交媒体增长" data-en="Social Media Growth">社交媒体增长</span>
           <span class="skill-tag">SEO / SEM</span>
-          <span class="skill-tag">B2B 营销</span>
+          <span class="skill-tag" data-zh="B2B 营销" data-en="B2B Marketing">B2B 营销</span>
         </div>
       </div>
       <div class="skill-card reveal">
         <div class="skill-icon">🎬</div>
-        <h3>内容创作</h3>
+        <h3 data-zh="内容创作" data-en="Content Creation">内容创作</h3>
         <div class="skill-tags">
-          <span class="skill-tag">短视频策划</span>
-          <span class="skill-tag">视频剪辑</span>
+          <span class="skill-tag" data-zh="短视频策划" data-en="Short Video Production">短视频策划</span>
+          <span class="skill-tag" data-zh="视频剪辑" data-en="Video Editing">视频剪辑</span>
           <span class="skill-tag">Photoshop</span>
-          <span class="skill-tag">内容敏感度</span>
-          <span class="skill-tag">文案撰写</span>
+          <span class="skill-tag" data-zh="内容敏感度" data-en="Content Sensitivity">内容敏感度</span>
+          <span class="skill-tag" data-zh="文案撰写" data-en="Copywriting">文案撰写</span>
         </div>
       </div>
       <div class="skill-card reveal">
         <div class="skill-icon">🎭</div>
-        <h3>教育与戏剧</h3>
+        <h3 data-zh="教育与戏剧" data-en="Education &amp; Drama">教育与戏剧</h3>
         <div class="skill-tags">
-          <span class="skill-tag">学习设计</span>
-          <span class="skill-tag">戏剧表演与导演</span>
-          <span class="skill-tag">自我启示剧场</span>
-          <span class="skill-tag">U 型理论</span>
-          <span class="skill-tag">组织发展工作坊</span>
+          <span class="skill-tag" data-zh="学习设计" data-en="Learning Design">学习设计</span>
+          <span class="skill-tag" data-zh="戏剧表演与导演" data-en="Drama Performance &amp; Direction">戏剧表演与导演</span>
+          <span class="skill-tag" data-zh="自我启示剧场" data-en="Playback Theatre">自我启示剧场</span>
+          <span class="skill-tag" data-zh="U 型理论" data-en="Theory U">U 型理论</span>
+          <span class="skill-tag" data-zh="组织发展工作坊" data-en="Org Development Workshops">组织发展工作坊</span>
         </div>
       </div>
       <div class="skill-card reveal">
         <div class="skill-icon">💼</div>
-        <h3>运营与管理</h3>
+        <h3 data-zh="运营与管理" data-en="Operations &amp; Management">运营与管理</h3>
         <div class="skill-tags">
-          <span class="skill-tag">项目统筹</span>
-          <span class="skill-tag">跨团队协作</span>
-          <span class="skill-tag">KOL 关系管理</span>
-          <span class="skill-tag">招聘全周期</span>
-          <span class="skill-tag">公共演讲</span>
+          <span class="skill-tag" data-zh="项目统筹" data-en="Project Coordination">项目统筹</span>
+          <span class="skill-tag" data-zh="跨团队协作" data-en="Cross-team Collaboration">跨团队协作</span>
+          <span class="skill-tag" data-zh="KOL 关系管理" data-en="KOL Relations">KOL 关系管理</span>
+          <span class="skill-tag" data-zh="招聘全周期" data-en="Full-cycle Recruiting">招聘全周期</span>
+          <span class="skill-tag" data-zh="公共演讲" data-en="Public Speaking">公共演讲</span>
         </div>
       </div>
       <div class="skill-card reveal">
         <div class="skill-icon">🛠️</div>
-        <h3>工具与软件</h3>
+        <h3 data-zh="工具与软件" data-en="Tools &amp; Software">工具与软件</h3>
         <div class="skill-tags">
           <span class="skill-tag">Microsoft Office</span>
           <span class="skill-tag">LinkedIn Recruiter</span>
-          <span class="skill-tag">BOSS 直聘</span>
-          <span class="skill-tag">百度爱采购</span>
+          <span class="skill-tag" data-zh="BOSS 直聘" data-en="BOSS Zhipin">BOSS 直聘</span>
+          <span class="skill-tag" data-zh="百度爱采购" data-en="Baidu Aicaigou">百度爱采购</span>
           <span class="skill-tag">DeepSeek / ChatGPT</span>
         </div>
       </div>
@@ -436,7 +448,7 @@
   <section class="section contact-section" id="contact">
     <div class="section-label mono"><span>05</span> Contact</div>
     <h2 class="reveal">Let's <em>Connect</em></h2>
-    <p class="contact-sub reveal">无论是实习合作、项目机会，还是单纯想聊聊，我很愿意认识你。</p>
+    <p class="contact-sub reveal" data-zh="无论是实习合作、项目机会，还是单纯想聊聊，我很愿意认识你。" data-en="Whether it's an internship, a project, or just a conversation — I'd love to meet you.">无论是实习合作、项目机会，还是单纯想聊聊，我很愿意认识你。</p>
     <div class="contact-links reveal">
       <a href="mailto:juliasha2024@gmail.com" class="contact-link">
         <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M1 3h12v9H1V3zm0 0l6 5.5L13 3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
@@ -455,7 +467,30 @@
   </footer>
 
   <script>
-    // Scroll reveal
+    // ── Language Switch ──────────────────────────────────────────────
+    let currentLang = 'zh';
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+      document.querySelectorAll('[data-zh][data-en]').forEach(el => {
+        const val = el.getAttribute('data-' + lang);
+        if (!val) return;
+        // For elements that contain child nodes (e.g. SVG inside .hero-cta), only update text nodes
+        if (el.querySelector('svg')) {
+          // Replace only the text node before the SVG
+          const textNode = [...el.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+          if (textNode) textNode.textContent = val + ' ';
+        } else {
+          el.innerHTML = val;
+        }
+      });
+    }
+
+    // ── Scroll Reveal ────────────────────────────────────────────────
     const reveals = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
@@ -467,7 +502,7 @@
     }, { threshold: .12 });
     reveals.forEach(el => io.observe(el));
 
-    // Navbar on scroll
+    // ── Navbar on scroll ─────────────────────────────────────────────
     const nav = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 60);
