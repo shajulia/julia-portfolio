@@ -23,7 +23,7 @@
     /* Navigation */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 1.6rem 4rem; transition: background .4s, padding .4s; }
     nav.scrolled { background: rgba(247,244,239,.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1rem 4rem; box-shadow: 0 1px 0 rgba(26,46,28,.08); }
-    .nav-left { display: flex; align-items: center; min-width: 120px; }
+    .nav-left { display: flex; align-items: center; }
     .nav-logo { font-family: 'Noto Sans SC', 'PingFang SC', 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 500; letter-spacing: .04em; color: var(--ink); text-decoration: none; }
     .nav-logo-allcaps { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
@@ -31,9 +31,19 @@
     .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width .3s; }
     .nav-links a:hover { color: var(--ink); }
     .nav-links a:hover::after { width: 100%; }
-    .nav-right { display: flex; align-items: center; min-width: 120px; justify-content: flex-end; }
+    .nav-right { display: flex; align-items: center; }
     .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; }
     .hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); transition: .3s; }
+    /* Mobile floating hamburger (top-right, hidden on desktop) */
+    .mobile-hamburger { display: none; position: fixed; top: 1.2rem; right: 2rem; z-index: 1001; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; }
+    .mobile-hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); transition: .3s; }
+    /* Hamburger → X animation */
+    .mobile-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .mobile-hamburger.open span:nth-child(2) { opacity: 0; }
+    .mobile-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* Language Toggle */
     .lang-toggle { display: flex; align-items: center; gap: 0; border: 1px solid rgba(26,46,28,.2); border-radius: 100px; overflow: hidden; font-size: .7rem; letter-spacing: .1em; cursor: pointer; }
@@ -147,22 +157,22 @@
 
     /* Responsive */
     @media (max-width: 900px) {
-      nav { padding: 1.2rem 2rem; justify-content: space-between; }
-      nav.scrolled { padding: .9rem 2rem; }
-      .nav-left { display: none; }
-      .nav-links { display: none; }
-      .nav-right { display: flex; }
-      .hamburger { display: flex; }
-      .nav-mobile-menu { display: none; position: fixed; top: 60px; left: 0; right: 0; background: var(--bg); padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; border-bottom: 1px solid rgba(26,46,28,.1); z-index: 999; }
+      /* Hide desktop nav entirely, show floating hamburger instead */
+      nav { display: none; }
+      .mobile-hamburger { display: flex; }
+      .nav-mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg); padding: 5rem 2rem 2rem; flex-direction: column; gap: 2rem; z-index: 1000; }
       .nav-mobile-menu.open { display: flex; }
-      .nav-mobile-menu a { font-size: .9rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; }
-      .hero { grid-template-columns: 1fr; padding: 0 2rem; text-align: center; min-height: auto; padding-top: 6rem; }
+      .nav-mobile-menu .lang-toggle { justify-content: center; }
+      .nav-mobile-menu a { font-size: 1.1rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; text-align: center; }
+      /* Hero: tighter spacing, no visual, name + eyebrow closer */
+      .hero { grid-template-columns: 1fr; padding: 0 2rem; text-align: center; min-height: auto; padding-top: 4rem; }
       .hero-text { padding: 0 0 3rem; }
-      .hero-eyebrow { justify-content: center; gap: .6rem; flex-wrap: wrap; }
+      .hero-eyebrow { justify-content: center; gap: .6rem; flex-wrap: wrap; margin-bottom: .8rem; }
       .hero-eyebrow::before { display: none; }
       .hero-eyebrow { font-size: .65rem; letter-spacing: .08em; }
+      .hero h1 { margin-bottom: 1rem; }
       .hero h1 .hero-name-en { display: none; }
-      .hero-tagline { margin: 0 auto 2.5rem; }
+      .hero-tagline { margin: 0 auto 0; }
       .hero-visual { display: none; }
       .hero-visual-mobile { display: block !important; }
       .hero-visual-mobile .avatar-ring { width: 200px; margin: 0 auto; aspect-ratio: 3/4; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 20px 50px rgba(26,46,28,.2); }
@@ -179,6 +189,7 @@
 </head>
 <body>
 
+  <!-- Desktop nav: logo+links left, hamburger right -->
   <nav id="navbar">
     <div class="nav-left">
       <a class="nav-logo" href="#" data-zh="沙雨薇" data-en="Julia Sha">沙雨薇</a>
@@ -188,13 +199,6 @@
       <li><a href="#education" data-zh="教育" data-en="Education">教育</a></li>
       <li><a href="#experience" data-zh="经历" data-en="Experience">经历</a></li>
       <li><a href="#skills" data-zh="技能" data-en="Skills">技能</a></li>
-      <li><a href="#contact" data-zh="联系" data-en="Contact">联系</a></li>
-      <li>
-        <div class="lang-toggle">
-          <button id="btn-zh" class="active" onclick="setLang('zh')">ZH</button>
-          <button id="btn-en" onclick="setLang('en')">EN</button>
-        </div>
-      </li>
     </ul>
     <div class="nav-right">
       <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
@@ -202,8 +206,9 @@
       </div>
     </div>
   </nav>
+  <!-- Mobile drawer: language toggle + nav links -->
   <div class="nav-mobile-menu" id="nav-mobile-menu">
-    <div class="lang-toggle" style="margin-bottom:.5rem">
+    <div class="lang-toggle" style="margin-bottom:1rem">
       <button id="btn-zh-mobile" class="active" onclick="setLang('zh')">ZH</button>
       <button id="btn-en-mobile" onclick="setLang('en')">EN</button>
     </div>
@@ -211,7 +216,10 @@
     <a href="#education" data-zh="教育" data-en="Education">教育</a>
     <a href="#experience" data-zh="经历" data-en="Experience">经历</a>
     <a href="#skills" data-zh="技能" data-en="Skills">技能</a>
-    <a href="#contact" data-zh="联系" data-en="Contact">联系</a>
+  </div>
+  <!-- Mobile floating hamburger button (top-right corner) -->
+  <div class="mobile-hamburger" id="mobile-hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
   </div>
 
   <!-- HERO -->
@@ -220,7 +228,6 @@
       <div class="hero-eyebrow mono">Learning Design · Innovation · Technology</div>
       <h1><span class="hero-name-en">Julia Sha</span><br/><span class="chinese-name">沙雨薇</span></h1>
       <p class="hero-tagline" data-zh="哈佛大学 Learning Design, Innovation &amp; Technology 硕士，致力于在教育、科技与创意之间探索有意义的连接。" data-en="Master of Education candidate at Harvard University (Learning Design, Innovation &amp; Technology), dedicated to building meaningful connections between education, technology, and creativity.">哈佛大学 Learning Design, Innovation &amp; Technology 硕士，致力于在教育、科技与创意之间探索有意义的连接。</p>
-      <a href="#contact" class="hero-cta" data-zh="联系我" data-en="Get in Touch">联系我 <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l5 4-5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
     <div class="hero-visual">
       <div class="avatar-ring">
@@ -545,11 +552,13 @@
     // ── Mobile Menu ─────────────────────────────────────────────────
     function toggleMobileMenu() {
       document.getElementById('nav-mobile-menu').classList.toggle('open');
+      document.getElementById('mobile-hamburger').classList.toggle('open');
     }
     // Close menu when clicking a nav link on mobile
     document.querySelectorAll('.nav-mobile-menu a').forEach(link => {
       link.addEventListener('click', () => {
         document.getElementById('nav-mobile-menu').classList.remove('open');
+        document.getElementById('mobile-hamburger').classList.remove('open');
       });
     });
   </script>
