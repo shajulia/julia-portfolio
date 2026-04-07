@@ -26,9 +26,11 @@
     html[lang="en"] .exp-bullets li { font-size: .92rem; }
     html[lang="en"] .edu-school { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; }
     html[lang="en"] .float-badge { font-family: 'Cormorant Garamond', serif; font-size: .75rem; }
-    html[lang="zh"] .hero-name-en { display: none; }
     html[lang="en"] .hero-name-en { display: inline; }
-    html[lang="en"] .chinese-name { font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; font-size: 0.65em; font-weight: 400; display: block; margin-top: 0.3em; }
+    html[lang="en"] .chinese-name { font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    @media (max-width: 900px) {
+      html[lang="zh"] .hero-name-en { display: none; }
+    }
     ::selection { background: var(--gold-light); color: var(--ink); }
     h1, h2, h3 { font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Cormorant Garamond', serif; font-weight: 500; line-height: 1.1; }
     .mono { font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
@@ -222,7 +224,7 @@
   <section class="hero">
     <div class="hero-text">
       <div class="hero-eyebrow mono">Learning Design · Innovation · Technology</div>
-      <h1><span class="hero-name-en">Julia Sha</span><br/><span class="chinese-name" data-zh="沙雨薇" data-en="Julia Sha">沙雨薇</span></h1>
+      <h1><span class="hero-name-en">Julia Sha</span><br/><span class="chinese-name" data-zh="沙雨薇" data-en="沙雨薇">沙雨薇</span></h1>
       <p class="hero-tagline" data-zh="哈佛大学 Learning Design, Innovation &amp; Technology 硕士，致力于在教育、科技与创意之间探索有意义的连接。" data-en="Master of Education at Harvard University (Learning Design, Innovation &amp; Technology), dedicated to building meaningful connections between education, technology, and creativity.">哈佛大学 Learning Design, Innovation &amp; Technology 硕士，致力于在教育、科技与创意之间探索有意义的连接。</p>
     </div>
     <div class="hero-visual">
@@ -498,7 +500,6 @@
 
   <footer>
     <span>© 2026 Julia Sha 沙雨薇</span>
-    <span>Designed with intention</span>
   </footer>
 
   <script>
