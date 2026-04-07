@@ -26,7 +26,6 @@
     .nav-logo { font-family: 'Noto Sans SC', 'PingFang SC', 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 500; letter-spacing: .04em; color: var(--ink); text-decoration: none; }
     .nav-logo-allcaps { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; margin: 0 auto; }
-    .nav-mobile, .hamburger { display: none; }
     .nav-links a { font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; position: relative; transition: color .25s; }
     .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width .3s; }
     .nav-links a:hover { color: var(--ink); }
@@ -145,15 +144,7 @@
 
     /* Responsive */
     @media (max-width: 900px) {
-      nav { padding: 1.2rem 2rem; justify-content: space-between; }
-      nav.scrolled { padding: .9rem 2rem; }
-      .nav-links { display: none; }
-      .nav-mobile { display: flex; align-items: center; gap: 1rem; }
-      .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; }
-      .hamburger span { width: 22px; height: 2px; background: var(--ink); transition: .3s; }
-      .nav-mobile-menu { display: none; position: fixed; top: 60px; left: 0; right: 0; background: var(--bg); padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; border-bottom: 1px solid rgba(26,46,28,.1); z-index: 999; }
-      .nav-mobile-menu.open { display: flex; }
-      .nav-mobile-menu a { font-size: .9rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; }
+      nav { display: none; }
       .hero { grid-template-columns: 1fr; padding: 0 2rem; text-align: center; min-height: auto; padding-top: 6rem; }
       .hero-text { padding: 0 0 3rem; }
       .hero-eyebrow { justify-content: center; gap: .6rem; flex-wrap: wrap; }
@@ -191,23 +182,7 @@
         </div>
       </li>
     </ul>
-    <div class="nav-mobile">
-      <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
   </nav>
-  <div class="nav-mobile-menu" id="nav-mobile-menu">
-    <div class="lang-toggle" style="margin-bottom:.5rem">
-      <button id="btn-zh-mobile" class="active" onclick="setLang('zh')">ZH</button>
-      <button id="btn-en-mobile" onclick="setLang('en')">EN</button>
-    </div>
-    <a href="#about" data-zh="关于" data-en="About" onclick="closeMobileMenu()">关于</a>
-    <a href="#education" data-zh="教育" data-en="Education" onclick="closeMobileMenu()">教育</a>
-    <a href="#experience" data-zh="经历" data-en="Experience" onclick="closeMobileMenu()">经历</a>
-    <a href="#skills" data-zh="技能" data-en="Skills" onclick="closeMobileMenu()">技能</a>
-    <a href="#contact" data-zh="联系" data-en="Contact" onclick="closeMobileMenu()">联系</a>
-  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -536,14 +511,6 @@
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
-
-    // ── Mobile Menu ─────────────────────────────────────────────────
-    function toggleMobileMenu() {
-      document.getElementById('nav-mobile-menu').classList.toggle('open');
-    }
-    function closeMobileMenu() {
-      document.getElementById('nav-mobile-menu').classList.remove('open');
-    }
   </script>
 
 </body>
