@@ -24,6 +24,7 @@
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 1.6rem 4rem; transition: background .4s, padding .4s; }
     nav.scrolled { background: rgba(247,244,239,.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1rem 4rem; box-shadow: 0 1px 0 rgba(26,46,28,.08); }
     .nav-logo { font-family: 'Noto Sans SC', 'PingFang SC', 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 500; letter-spacing: .04em; color: var(--ink); text-decoration: none; }
+    .nav-logo-allcaps { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
     .nav-links a { font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; position: relative; transition: color .25s; }
     .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width .3s; }
@@ -147,17 +148,18 @@
       nav.scrolled { padding: .9rem 2rem; }
       .nav-right { display: none; }
       .nav-mobile { display: flex; align-items: center; gap: 1rem; }
-      .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; }
+      .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; }
       .hamburger span { width: 22px; height: 2px; background: var(--ink); transition: .3s; }
-      .nav-mobile-menu { display: none; position: fixed; top: 60px; left: 0; right: 0; background: var(--bg); padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; border-bottom: 1px solid rgba(26,46,28,.1); }
+      .nav-mobile { display: none; align-items: center; gap: 1rem; }
+      .nav-mobile-menu { display: none; position: fixed; top: 60px; left: 0; right: 0; background: var(--bg); padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; border-bottom: 1px solid rgba(26,46,28,.1); z-index: 999; }
       .nav-mobile-menu.open { display: flex; }
       .nav-mobile-menu a { font-size: .9rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; }
-      .nav-mobile-menu .lang-toggle { align-self: flex-start; }
       .hero { grid-template-columns: 1fr; padding: 0 2rem; text-align: center; min-height: auto; padding-top: 6rem; }
       .hero-text { padding: 0 0 3rem; }
       .hero-eyebrow { justify-content: center; gap: .6rem; flex-wrap: wrap; }
       .hero-eyebrow::before { display: none; }
       .hero-eyebrow { font-size: .65rem; letter-spacing: .08em; }
+      .hero h1 .hero-name-en { display: none; }
       .hero-tagline { margin: 0 auto 2.5rem; }
       .hero-visual { display: none; }
       .hero-visual-mobile { display: block !important; }
@@ -170,6 +172,7 @@
       .skills-grid { grid-template-columns: 1fr 1fr; }
       footer { padding: 1.5rem 2rem; flex-direction: column; gap: .5rem; text-align: center; }
       .nav-links { display: none; }
+      .nav-mobile { display: flex !important; }
     }
     @media (max-width: 600px) { .skills-grid { grid-template-columns: 1fr; } }
   </style>
@@ -177,7 +180,7 @@
 <body>
 
   <nav id="navbar">
-    <a href="#" class="nav-logo">Julia Sha</a>
+    <a href="#" class="nav-logo"><span class="nav-logo-allcaps">Julia Sha</span><br/><span class="nav-logo-cn">沙雨薇</span></a>
     <ul class="nav-links">
       <li><a href="#about" data-zh="关于" data-en="About">关于</a></li>
       <li><a href="#education" data-zh="教育" data-en="Education">教育</a></li>
@@ -191,7 +194,24 @@
         </div>
       </li>
     </ul>
+    <!-- Mobile: hamburger + drawer -->
+    <div class="nav-mobile">
+      <div class="lang-toggle">
+        <button id="btn-zh-mobile" class="active" onclick="setLang('zh')">ZH</button>
+        <button id="btn-en-mobile" onclick="setLang('en')">EN</button>
+      </div>
+      <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
   </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="#about" data-zh="关于" data-en="About" onclick="closeMobileMenu()">关于</a>
+    <a href="#education" data-zh="教育" data-en="Education" onclick="closeMobileMenu()">教育</a>
+    <a href="#experience" data-zh="经历" data-en="Experience" onclick="closeMobileMenu()">经历</a>
+    <a href="#skills" data-zh="技能" data-en="Skills" onclick="closeMobileMenu()">技能</a>
+    <a href="#contact" data-zh="联系" data-en="Contact" onclick="closeMobileMenu()">联系</a>
+  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -485,6 +505,8 @@
       currentLang = lang;
       document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
       document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-zh-mobile') && document.getElementById('btn-zh-mobile').classList.toggle('active', lang === 'zh');
+      document.getElementById('btn-en-mobile') && document.getElementById('btn-en-mobile').classList.toggle('active', lang === 'en');
       document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
 
       document.querySelectorAll('[data-zh][data-en]').forEach(el => {
@@ -518,6 +540,14 @@
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
+
+    // ── Mobile Menu ─────────────────────────────────────────────────
+    function toggleMobileMenu() {
+      document.getElementById('nav-mobile-menu').classList.toggle('open');
+    }
+    function closeMobileMenu() {
+      document.getElementById('nav-mobile-menu').classList.remove('open');
+    }
   </script>
 
 </body>
