@@ -53,9 +53,21 @@
     .lang-toggle button { background: none; border: none; padding: .35rem .75rem; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .1em; color: var(--ink-mid); transition: background .25s, color .25s; }
     .lang-toggle button.active { background: var(--ink); color: var(--bg); }
     .lang-toggle button:hover:not(.active) { background: var(--bg-alt); }
-    /* Mobile floating language toggle (top-right, shown on mobile) */
-    .mobile-lang-toggle { display: none; position: fixed; top: 1.2rem; right: 2rem; z-index: 1001; }
-    .mobile-lang-toggle::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: 55px; background: rgba(247, 244, 239, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: -1; box-shadow: 0 1px 0 rgba(26,46,28,.06); }
+    /* Mobile nav */
+    .mobile-nav { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(247,244,239,.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 1.1rem 1.8rem; justify-content: space-between; align-items: center; box-shadow: 0 1px 0 rgba(26,46,28,.08); }
+    .mobile-nav.open { box-shadow: 0 2px 20px rgba(26,46,28,.1); }
+    .mobile-nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 500; letter-spacing: .04em; color: var(--ink); text-decoration: none; }
+    .mobile-nav-right { display: flex; align-items: center; gap: .8rem; }
+    .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: .4rem; background: none; border: none; }
+    .hamburger span { width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; flex-direction: column; position: fixed; top: 56px; left: 0; right: 0; background: rgba(247,244,239,.98); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 1rem 1.8rem 1.5rem; border-bottom: 1px solid rgba(26,46,28,.08); z-index: 999; gap: 0; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; padding: .8rem 0; border-bottom: 1px solid rgba(26,46,28,.06); display: block; }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu .lang-toggle { align-self: flex-start; margin-top: 1rem; }
 
     /* Hero */
     .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 0 4rem; position: relative; overflow: hidden; }
@@ -165,9 +177,9 @@
 
     /* Responsive */
     @media (max-width: 900px) {
-      /* Hide desktop nav entirely, show floating language toggle instead */
+      /* Hide desktop nav, show mobile nav */
       nav { display: none; }
-      .mobile-lang-toggle { display: flex; }
+      .mobile-nav { display: flex; }
       /* Hero: tighter spacing, no visual, name + eyebrow closer */
       .hero { grid-template-columns: 1fr; padding: 0 2rem; text-align: center; min-height: auto; padding-top: 6rem; }
       .hero-text { padding: 0 0 2rem; }
@@ -198,7 +210,7 @@
 </head>
 <body>
 
-  <!-- Desktop nav: logo+links left, language toggle right -->
+  <!-- Desktop nav -->
   <nav id="navbar">
     <ul class="nav-links">
       <li><a href="#about" data-zh="关于" data-en="About">关于</a></li>
@@ -214,10 +226,26 @@
       </div>
     </div>
   </nav>
-  <!-- Mobile floating language toggle (top-right corner) -->
-  <div class="mobile-lang-toggle lang-toggle">
-    <button id="btn-zh-mobile" class="active" onclick="setLang('zh')">中文</button>
-    <button id="btn-en-mobile" onclick="setLang('en')">EN</button>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#" class="mobile-nav-logo">Julia Sha</a>
+    <div class="mobile-nav-right">
+      <div class="lang-toggle">
+        <button id="btn-zh-m" class="active" onclick="setLang('zh')">中文</button>
+        <button id="btn-en-m" onclick="setLang('en')">EN</button>
+      </div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" data-zh="关于" data-en="About">关于</a>
+    <a href="#education" data-zh="教育" data-en="Education">教育</a>
+    <a href="#experience" data-zh="经历" data-en="Experience">经历</a>
+    <a href="#skills" data-zh="技能" data-en="Skills">技能</a>
+    <a href="#contact" data-zh="联系" data-en="Connect">联系</a>
   </div>
 
   <!-- HERO -->
@@ -508,10 +536,11 @@
 
     function setLang(lang) {
       currentLang = lang;
-      document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
-      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-      document.getElementById('btn-zh-mobile') && document.getElementById('btn-zh-mobile').classList.toggle('active', lang === 'zh');
-      document.getElementById('btn-en-mobile') && document.getElementById('btn-en-mobile').classList.toggle('active', lang === 'en');
+      // Sync all language buttons
+      ['btn-zh','btn-en','btn-zh-m','btn-en-m'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('active', id.includes(lang));
+      });
       document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
 
       document.querySelectorAll('[data-zh][data-en]').forEach(el => {
@@ -548,6 +577,26 @@
 
     // Language toggle initialization
     setLang('zh');
+
+    // Mobile hamburger menu
+    const hamburger = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileNav = document.getElementById('mobileNav');
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', open);
+        mobileNav.classList.toggle('open', open);
+      });
+      // Close menu on link click
+      mobileMenu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          mobileNav.classList.remove('open');
+        });
+      });
+    }
   </script>
 
 </body>
