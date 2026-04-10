@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Julia Sha 沙雨薇</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- 温暖人文化的字体组合 -->
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* 温暖极简主义配色 */
+      --bg: #FAF9F6; --bg-alt: #F5F1E8; --ink: #2C2C2C; --ink-mid: #5A5A5A;
+      --ink-light: #7A7A7A; --gold: #D4A574; --gold-light: #E0B589;
+      --white: #FFFFFF; --cream: #FFF8F3; --sage: #8B9D83;
+      --dark-hero: #2C2416; --dark-hero-end: #3E3428;
+      --shadow-warm: rgba(212, 165, 116, 0.15);
+      --shadow-soft: rgba(44, 44, 44, 0.08);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { background: var(--bg); color: var(--ink); font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', -apple-system, sans-serif; font-weight: 400; line-height: 1.7; letter-spacing: -0.01em; overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    html[lang="en"] body { font-family: 'Inter', -apple-system, sans-serif; font-weight: 400; }
+    html[lang="en"] h3 { font-family: 'Crimson Pro', 'Noto Serif SC', serif !important; font-weight: 500; }
+    html[lang="en"] .mono { font-family: 'Inter', monospace; font-weight: 500; }
+    html[lang="en"] h1, html[lang="en"] h2, html[lang="en"] h3 { font-family: 'Crimson Pro', serif; font-weight: 500; }
+    html[lang="en"] .hero h1 { font-weight: 400; }
+    html[lang="en"] .hero-tagline { font-size: 1.08rem; line-height: 1.75; }
+    html[lang="en"] .about-text p { font-size: 1.08rem; line-height: 1.75; }
+    html[lang="en"] .exp-bullets li { font-size: .92rem; line-height: 1.65; }
+    html[lang="en"] .edu-school { font-family: 'Crimson Pro', serif; font-size: 1.6rem; font-weight: 500; }
+    html[lang="en"] .float-badge { font-family: 'Inter', sans-serif; font-size: .75rem; }
+    html[lang="en"] .hero-name-en { display: inline; }
+    html[lang="en"] .chinese-name { font-family: 'PingFang SC', 'Noto Sans SC', sans-serif; }
+    @media (max-width: 900px) {
+      html[lang="zh"] .hero-name-en { display: none; }
+    }
+    ::selection { background: var(--gold-light); color: var(--ink); }
+    h1, h2, h3 { font-family: 'Crimson Pro', 'Noto Serif SC', 'PingFang SC', serif; font-weight: 400; line-height: 1.2; letter-spacing: 0.01em; }
+    .mono { font-family: 'Inter', sans-serif; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 500; }
+
+    /* Navigation - 温暖的毛玻璃效果 */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 4rem; height: 56px; transition: background .4s, backdrop-filter .4s; }
+    nav.scrolled { background: rgba(250, 249, 246, 0.92); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); box-shadow: 0 1px 0 rgba(44,36,22,.08), 0 4px 12px rgba(212,165,116,.06); }
+
+    /* Reading Progress Bar */
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); z-index: 1001; transition: width .1s linear; border-radius: 0 2px 2px 0; }
+
+    /* Active nav link highlight */
+    .nav-links a.active { color: var(--gold) !important; }
+    .nav-links a.active::after { width: 100% !important; }
+    .nav-left { display: flex; align-items: center; }
+    .nav-logo { font-family: 'Crimson Pro', 'Noto Serif SC', serif; font-size: 1.3rem; font-weight: 500; letter-spacing: .02em; color: var(--ink); text-decoration: none; transition: color .3s; }
+    nav:not(.scrolled) .nav-logo { color: var(--cream); }
+    .nav-logo:hover { color: var(--gold); }
+    .nav-logo-allcaps { font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 400; font-family: 'Inter', sans-serif; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+    .nav-links a { font-size: .8rem; letter-spacing: .08em; font-weight: 400; color: var(--ink); text-decoration: none; position: relative; transition: color .3s; }
+    nav:not(.scrolled) .nav-links a { color: rgba(255,248,243,.9); }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width .3s; border-radius: 2px; }
+    .nav-links a:hover { color: var(--gold); }
+    nav:not(.scrolled) .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; }
+
+    /* Language Toggle */
+    .lang-toggle { display: flex; align-items: center; gap: 0; border: 1px solid rgba(44,44,44,.15); border-radius: 100px; overflow: hidden; font-size: .72rem; letter-spacing: .08em; }
+    nav:not(.scrolled) .lang-toggle { border-color: rgba(255,248,243,.25); }
+    .lang-toggle button { background: none; border: none; padding: .4rem .85rem; cursor: pointer; font-family: 'Inter', sans-serif; font-size: .72rem; letter-spacing: .08em; color: var(--ink-mid); transition: background .3s, color .3s; }
+    nav:not(.scrolled) .lang-toggle button { color: rgba(255,248,243,.8); }
+    .lang-toggle button.active { background: var(--gold); color: var(--white); }
+    .lang-toggle button:hover:not(.active) { background: rgba(212,165,116,.1); }
+    nav:not(.scrolled) .lang-toggle button:hover:not(.active) { background: rgba(255,248,243,.1); }
+    /* Mobile nav - 温暖风格 */
+    .mobile-nav { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(250,249,246,0.95); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); padding: 0 1.8rem; height: 52px; justify-content: space-between; align-items: center; box-shadow: 0 1px 0 rgba(44,36,22,.08); }
+    .mobile-nav.open { box-shadow: 0 2px 12px rgba(212,165,116,.12); }
+    .mobile-nav-logo { font-family: 'Crimson Pro', serif; font-size: 1.2rem; font-weight: 500; letter-spacing: .02em; color: var(--ink); text-decoration: none; }
+    .mobile-nav-right { display: flex; align-items: center; gap: .8rem; }
+    .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: .4rem; background: none; border: none; }
+    .hamburger span { width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; flex-direction: column; position: fixed; top: 52px; left: 0; right: 0; background: rgba(250,249,246,0.98); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); padding: 1rem 1.8rem 1.5rem; border-bottom: 1px solid rgba(44,36,22,.08); z-index: 999; gap: 0; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; padding: .9rem 0; border-bottom: 1px solid rgba(44,36,22,.06); display: block; font-weight: 400; transition: color .3s; }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-menu .lang-toggle { align-self: flex-start; margin-top: 1rem; }
+
+    /* Hero - 温暖的电影感 */
+    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 0 4rem; position: relative; overflow: hidden; background: linear-gradient(135deg, var(--dark-hero) 0%, var(--dark-hero-end) 100%); }
+    .hero::before { content: ''; position: absolute; top: -20%; right: -10%; width: 65vw; height: 140%; background: radial-gradient(ellipse at 60% 40%, rgba(212,165,116,.12) 0%, transparent 65%); pointer-events: none; }
+    .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,165,116,.3), transparent); }
+    .hero-text { padding: 6rem 0 4rem; }
+    .hero-eyebrow { color: var(--gold-light); margin-bottom: 1.8rem; display: flex; align-items: center; gap: 1rem; font-size: .75rem; }
+    .hero-eyebrow::before { content: ''; display: block; width: 40px; height: 2px; background: var(--gold-light); border-radius: 2px; }
+    .hero h1 { font-size: clamp(3.5rem, 7vw, 6rem); font-weight: 300; letter-spacing: .01em; line-height: 1.15; margin-bottom: 1.8rem; color: var(--cream); }
+    .hero h1 em { font-style: italic; color: var(--gold-light); }
+    .hero h1 .chinese-name { font-family: 'Noto Serif SC', 'PingFang SC', serif; font-style: normal; color: var(--cream); font-weight: 300; }
+    .float-badge { font-family: 'Inter', 'Noto Sans SC', sans-serif; }
+    .hero h1 .hero-name-en { letter-spacing: .03em; font-family: 'Crimson Pro', serif; font-weight: 300; }
+    .hero-tagline { font-size: 1.1rem; color: rgba(255,248,243,.75); max-width: 55ch; line-height: 1.75; letter-spacing: 0em; margin-bottom: 2.8rem; }
+    .hero-cta { display: inline-flex; align-items: center; gap: .8rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cream); background: var(--gold); text-decoration: none; padding: 1rem 2.2rem; border: none; border-radius: 100px; transition: all .3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 500; box-shadow: 0 4px 12px rgba(212,165,116,.25); }
+    .hero-cta:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,165,116,.35); }
+    .hero-visual { display: flex; justify-content: center; align-items: center; padding: 4rem 0; position: relative; }
+    .hero-visual-mobile { display: none; }
+    .avatar-ring { width: clamp(260px, 28vw, 400px); aspect-ratio: 3/4; border-radius: 24px; position: relative; overflow: hidden; box-shadow: 0 20px 60px rgba(44,36,22,.3), 0 8px 24px rgba(212,165,116,.2); transition: transform .4s ease; }
+    .avatar-ring:hover { transform: translateY(-8px); }
+    .avatar-ring img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .avatar-ring::after { content: ''; position: absolute; inset: 0; border-radius: 24px; border: 2px solid rgba(212,165,116,.2); }
+    .float-badge { position: absolute; background: rgba(255,255,255,.95); backdrop-filter: saturate(180%) blur(20px); border-radius: 16px; padding: .9rem 1.4rem; box-shadow: 0 8px 24px rgba(44,36,22,.15), 0 2px 8px rgba(212,165,116,.1); font-size: .75rem; color: var(--ink); display: flex; align-items: center; gap: .8rem; white-space: nowrap; border: 1px solid rgba(212,165,116,.15); transition: transform .3s ease; }
+    .float-badge:hover { transform: scale(1.05); }
+    .float-badge-1 { top: 6%; right: -2rem; animation: float1 5s ease-in-out infinite; }
+    .float-badge-2 { bottom: 14%; left: -3rem; animation: float2 6s ease-in-out infinite; }
+    .badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+    @keyframes float1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    @keyframes float2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+    .scroll-hint { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: .6rem; color: rgba(255,248,243,.4); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; animation: fadeUp 2.5s ease-in-out infinite; }
+    .scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(212,165,116,.5), transparent); }
+    @keyframes fadeUp { 0%, 100% { opacity: .4; transform: translateX(-50%) translateY(0); } 50% { opacity: 1; transform: translateX(-50%) translateY(-6px); } }
+
+    /* Sections - 温暖清晰布局 */
+    .section { padding: 8rem 4rem; }
+    .section-label { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 4rem; font-size: .75rem; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, rgba(212,165,116,.3), transparent); }
+    .section-label span { color: var(--gold); font-weight: 500; }
+    .section h2 { font-size: clamp(2.2rem, 4vw, 3.8rem); font-weight: 400; letter-spacing: .02em; line-height: 1.25; color: var(--ink); }
+
+    /* About - 人文化排版 */
+    .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 6rem; align-items: start; }
+    .about-text p { font-size: 1.1rem; color: var(--ink-mid); margin-bottom: 1.8rem; max-width: 58ch; line-height: 1.75; letter-spacing: 0em; }
+    .about-text p:first-of-type::first-letter { font-family: 'Crimson Pro', serif; font-size: 4.5rem; float: left; line-height: .85; margin-right: .15em; margin-top: .08em; color: var(--gold); font-weight: 400; }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding-top: 1rem; }
+    .stat-card { background: var(--white); border-radius: 20px; padding: 2rem 1.8rem; box-shadow: 0 8px 24px rgba(212,165,116,.12), 0 2px 8px var(--shadow-soft); border: 1px solid rgba(212,165,116,.1); transition: all .3s ease; }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(212,165,116,.18), 0 4px 12px var(--shadow-soft); }
+    .stat-card .stat-num { font-family: 'Crimson Pro', serif; font-size: 3.5rem; font-weight: 400; color: var(--gold); line-height: 1; margin-bottom: .5rem; }
+    .stat-card .stat-label { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-light); font-family: 'Inter', sans-serif; font-weight: 500; }
+
+    /* Education - 温暖的深色区块 */
+    .edu-section { background: linear-gradient(135deg, var(--dark-hero) 0%, var(--dark-hero-end) 100%); color: var(--cream); position: relative; }
+    .edu-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,165,116,.3), transparent); }
+    .edu-section .section-label span { color: var(--gold-light); }
+    .edu-section .section-label { color: rgba(255,248,243,.4); }
+    .edu-section .section-label::after { background: linear-gradient(to right, rgba(212,165,116,.3), transparent); }
+    .edu-section h2 { color: var(--cream); }
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .edu-card { background: rgba(255,255,255,.06); border: 1px solid rgba(212,165,116,.15); border-radius: 20px; padding: 2.8rem 2.5rem; position: relative; overflow: hidden; transition: all .3s ease; }
+    .edu-card:hover { background: rgba(255,255,255,.09); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.2); }
+    .edu-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(180deg, var(--gold-light), var(--gold)); border-radius: 0 2px 2px 0; }
+    .edu-school { font-family: 'Crimson Pro', serif; font-size: 1.7rem; font-weight: 500; margin-bottom: .4rem; color: var(--cream); letter-spacing: .01em; }
+    .edu-degree { font-size: .92rem; color: var(--gold-light); margin-bottom: 1.2rem; line-height: 1.6; letter-spacing: 0em; }
+    .edu-period { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,248,243,.35); margin-bottom: 1.5rem; font-weight: 400; }
+    .edu-honors { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .edu-honors li { font-size: .92rem; color: rgba(255,248,243,.65); padding-left: 1.3rem; position: relative; line-height: 1.6; letter-spacing: 0em; }
+    .edu-honors li::before { content: '—'; position: absolute; left: 0; color: var(--gold-light); }
+
+    /* Experience - 清晰时间轴 */
+    .exp-list { display: flex; flex-direction: column; gap: 0; }
+    .exp-item { display: grid; grid-template-columns: 220px 1fr; gap: 3rem; padding: 3.5rem 0; border-bottom: 1px solid rgba(212,165,116,.15); align-items: start; transition: background .3s ease; }
+    .exp-item:first-child { border-top: 1px solid rgba(212,165,116,.15); }
+    .exp-item:hover { background: rgba(212,165,116,.02); }
+    .exp-meta { padding-top: .2rem; }
+    .exp-company { font-family: 'Crimson Pro', serif; font-size: 1.35rem; font-weight: 500; color: var(--ink); margin-bottom: .4rem; letter-spacing: .01em; }
+    .exp-role { font-size: .92rem; color: var(--gold); letter-spacing: 0em; margin-bottom: .6rem; font-weight: 400; }
+    .exp-period { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-light); font-weight: 400; }
+    .exp-dots { display: flex; gap: .35rem; margin-top: .7rem; }
+    .exp-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold-light); }
+    .exp-content h3 { font-size: 1.2rem; font-weight: 500; color: var(--ink); margin-bottom: 1.2rem; font-family: 'Crimson Pro', 'Noto Serif SC', serif; letter-spacing: .01em; }
+    html[lang="en"] .exp-content h3 { font-family: 'Crimson Pro', serif !important; font-size: 1.2rem; font-weight: 500; }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: .8rem; }
+    .exp-bullets li { font-size: .95rem; color: var(--ink-mid); padding-left: 1.5rem; position: relative; line-height: 1.7; letter-spacing: 0em; }
+    .exp-bullets li::before { content: '◆'; position: absolute; left: 0; font-size: .5rem; top: .5rem; color: var(--gold); }
+
+    /* Skills - 温暖产品卡片 */
+    .skills-section { background: var(--bg-alt); }
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; }
+    .skill-card { background: var(--white); border-radius: 20px; padding: 2.2rem 2rem; position: relative; overflow: hidden; transition: all .3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px var(--shadow-soft), 0 1px 4px rgba(212,165,116,.08); border: 1px solid rgba(212,165,116,.1); }
+    .skill-card:hover { transform: translateY(-6px) rotate(0.5deg); box-shadow: 0 12px 32px rgba(212,165,116,.15), 0 4px 12px var(--shadow-soft); }
+    .skill-icon { width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, var(--bg-alt), var(--bg)); display: flex; align-items: center; justify-content: center; margin-bottom: 1.4rem; font-size: 1.4rem; box-shadow: 0 2px 8px var(--shadow-soft); }
+    .skill-card h3 { font-family: 'Crimson Pro', 'Noto Serif SC', serif; font-size: 1.2rem; font-weight: 500; color: var(--ink); margin-bottom: 1rem; letter-spacing: .01em; }
+    html[lang="en"] .skill-card h3 { font-family: 'Crimson Pro', serif !important; font-size: 1.2rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .skill-tag { font-size: .72rem; letter-spacing: .04em; padding: .4rem .9rem; border-radius: 100px; background: var(--bg); color: var(--ink-mid); border: 1px solid rgba(212,165,116,.15); font-weight: 400; transition: all .3s ease; }
+    .skill-tag:hover { background: var(--gold); color: var(--white); border-color: var(--gold); }
+
+    /* Contact - 温暖优雅 */
+    .contact-section { background: linear-gradient(135deg, var(--dark-hero) 0%, var(--dark-hero-end) 100%); text-align: center; color: var(--cream); position: relative; }
+    .contact-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,165,116,.3), transparent); }
+    .contact-section .section-label { color: rgba(255,248,243,.4); }
+    .contact-section .section-label span { color: var(--gold-light); }
+    .contact-section .section-label::after { background: linear-gradient(to right, rgba(212,165,116,.3), transparent); }
+    .contact-section h2 { color: var(--cream); font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 1.8rem; font-family: 'Crimson Pro', serif; font-weight: 400; letter-spacing: .02em; }
+    .contact-section h2 em { font-style: italic; color: var(--gold-light); }
+    .contact-sub { font-size: .95rem; color: rgba(255,248,243,.65); margin-bottom: 3.5rem; max-width: 55ch; margin-left: auto; margin-right: auto; line-height: 1.7; letter-spacing: 0em; }
+    .contact-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+    .contact-link { display: inline-flex; align-items: center; gap: .7rem; padding: 1rem 2rem; border: 1.5px solid rgba(212,165,116,.3); border-radius: 100px; color: var(--cream); text-decoration: none; font-size: .8rem; letter-spacing: .06em; transition: all .3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 400; background: transparent; }
+    .contact-link:hover { border-color: var(--gold); background: rgba(212,165,116,.15); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212,165,116,.2); }
+
+    /* Footer - 温暖极简 */
+    footer { background: linear-gradient(135deg, #1a1410 0%, #241c14 100%); padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(212,165,116,.15); }
+    footer span { font-size: .75rem; color: rgba(255,248,243,.35); letter-spacing: .08em; font-weight: 400; }
+
+    /* Animations - 柔和动效 */
+    .reveal { opacity: 0; transform: translateY(28px); }
+    .reveal.visible { opacity: 1; transform: translateY(0); transition: opacity .8s cubic-bezier(0.4, 0, 0.2, 1), transform .8s cubic-bezier(0.4, 0, 0.2, 1); }
+
+    /* Responsive - 移动端优化 */
+    @media (max-width: 900px) {
+      /* Hide desktop nav, show mobile nav */
+      nav { display: none; }
+      .mobile-nav { display: flex; }
+      /* Hero: 保持温暖背景 */
+      .hero { grid-template-columns: 1fr; padding: 0 2rem; text-align: center; min-height: auto; padding-top: 5.5rem; background: linear-gradient(135deg, var(--dark-hero) 0%, var(--dark-hero-end) 100%); }
+      .hero-text { padding: 0 0 2.5rem; }
+      .hero-eyebrow { justify-content: center; gap: .7rem; flex-wrap: wrap; margin-bottom: 1.5rem; font-size: .7rem; }
+      html[lang="en"] .hero-eyebrow { margin-bottom: 2rem; }
+      .hero-eyebrow::before { width: 30px; }
+      .hero h1 { margin-bottom: .8rem; font-size: clamp(2.5rem, 10vw, 3.5rem); line-height: 1.2; }
+      html[lang="en"] .hero h1 { margin-bottom: 1.2rem; }
+      .hero h1 .hero-name-en { display: none; }
+      html[lang="en"] .hero h1 .hero-name-en { display: inline; }
+      html[lang="en"] .hero h1 .chinese-name { display: none; }
+      .hero-tagline { margin: 0 auto 2rem; font-size: 1rem; line-height: 1.7; max-width: 90%; color: rgba(255,248,243,.75); }
+      html[lang="en"] .hero-tagline { font-size: .95rem; line-height: 1.7; }
+      .hero-visual { display: none; }
+      .hero-visual-mobile { display: block !important; }
+      .hero-visual-mobile .avatar-ring { width: 220px; margin: 0 auto; aspect-ratio: 3/4; border-radius: 18px; overflow: hidden; box-shadow: 0 20px 50px rgba(44,36,22,.3), 0 8px 24px rgba(212,165,116,.2); }
+      .hero-visual-mobile .avatar-ring img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+      .section { padding: 5rem 2rem; }
+      .section-label { gap: .8rem; margin-bottom: 2.5rem; font-size: .7rem; }
+      .section h2 { font-size: clamp(1.8rem, 7vw, 2.5rem); margin-bottom: 2.5rem; line-height: 1.25; }
+      /* About - 单栏布局 */
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-text p { font-size: .98rem; line-height: 1.75; margin-bottom: 1.5rem; }
+      .about-text p:first-of-type::first-letter { font-size: 3.5rem; margin-right: .12em; }
+      html[lang="en"] .about-text p { font-size: 1rem; line-height: 1.75; }
+      .about-stats { grid-template-columns: 1fr; gap: 1.2rem; }
+      .stat-card { padding: 1.8rem 1.5rem; border-radius: 18px; }
+      /* Education - 移动端卡片 */
+      .edu-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .edu-card { padding: 2rem 1.8rem; border-radius: 18px; }
+      .edu-school { font-size: 1.4rem; }
+      html[lang="en"] .edu-school { font-size: 1.5rem; }
+      .edu-degree { font-size: .88rem; margin-bottom: 1rem; line-height: 1.6; }
+      html[lang="en"] .edu-degree { font-size: .9rem; }
+      .edu-honors li { font-size: .88rem; line-height: 1.6; padding-left: 1.2rem; }
+      html[lang="en"] .edu-honors li { font-size: .88rem; }
+      /* Experience - 移动端单栏 */
+      .exp-item { grid-template-columns: 1fr; gap: 1.2rem; padding: 2.5rem 0; }
+      .exp-sidebar { border-bottom: 1px solid rgba(212,165,116,.15); padding-bottom: 1rem; }
+      .exp-company { font-size: 1.2rem; margin-bottom: .3rem; }
+      html[lang="en"] .exp-company { font-size: 1.25rem; }
+      .exp-role { font-size: .88rem; margin-bottom: .5rem; }
+      .exp-period { font-size: .7rem; }
+      .exp-content h3 { font-size: 1.1rem; margin-bottom: 1rem; }
+      html[lang="en"] .exp-content h3 { font-size: 1.15rem; }
+      .exp-bullets li { font-size: .9rem; padding-left: 1.3rem; line-height: 1.65; }
+      html[lang="en"] .exp-bullets li { font-size: .9rem; line-height: 1.65; }
+      /* Skills - 移动端双栏 */
+      .skills-grid { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+      .skill-card { padding: 1.8rem 1.5rem; border-radius: 18px; }
+      .skill-icon { width: 44px; height: 44px; border-radius: 11px; margin-bottom: 1.2rem; font-size: 1.3rem; }
+      .skill-card h3 { font-size: 1.1rem; margin-bottom: .8rem; }
+      html[lang="en"] .skill-card h3 { font-size: 1.15rem; }
+      .skill-tags { gap: .4rem; }
+      .skill-tag { font-size: .7rem; padding: .35rem .8rem; }
+      /* Contact - 移动端 */
+      .contact-section { padding: 5rem 2rem; }
+      .contact-section h2 { font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 1.5rem; line-height: 1.2; }
+      .contact-sub { font-size: .9rem; margin-bottom: 2.5rem; line-height: 1.7; }
+      html[lang="en"] .contact-sub { font-size: .92rem; }
+      .contact-links { gap: 1rem; }
+      .contact-link { padding: .9rem 1.8rem; font-size: .78rem; }
+      /* Footer - 移动端 */
+      footer { padding: 2rem; flex-direction: column; gap: .8rem; text-align: center; }
+      footer span { font-size: .72rem; }
+    }
+    @media (max-width: 600px) { .skills-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div id="progress-bar"></div>
+
+  <!-- Desktop nav -->
+  <nav id="navbar">
+    <div class="nav-left">
+      <a href="#" class="nav-logo">Julia Sha</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about" data-zh="关于" data-en="About">关于</a></li>
+      <li><a href="#education" data-zh="教育" data-en="Education">教育</a></li>
+      <li><a href="#experience" data-zh="经历" data-en="Experience">经历</a></li>
+      <li><a href="#skills" data-zh="技能" data-en="Skills">技能</a></li>
+      <li><a href="#contact" data-zh="联系" data-en="Connect">联系</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button id="btn-zh" class="active" onclick="setLang('zh')">中文</button>
+        <button id="btn-en" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#" class="mobile-nav-logo">Julia Sha</a>
+    <div class="mobile-nav-right">
+      <div class="lang-toggle">
+        <button id="btn-zh-m" class="active" onclick="setLang('zh')">中文</button>
+        <button id="btn-en-m" onclick="setLang('en')">EN</button>
+      </div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" data-zh="关于" data-en="About">关于</a>
+    <a href="#education" data-zh="教育" data-en="Education">教育</a>
+    <a href="#experience" data-zh="经历" data-en="Experience">经历</a>
+    <a href="#skills" data-zh="技能" data-en="Skills">技能</a>
+    <a href="#contact" data-zh="联系" data-en="Connect">联系</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <div class="hero-eyebrow mono">Learning Design · Innovation · Technology</div>
+      <h1><span class="hero-name-en">Julia Sha</span><br/><span class="chinese-name" data-zh="沙雨薇" data-en="沙雨薇">沙雨薇</span></h1>
+      <p class="hero-tagline" data-zh="哈佛大学 Learning Design, Innovation &amp; Technology 硕士，致力于在教育、科技与创意之间探索有意义的连接。" data-en="Master of Education at Harvard University (Learning Design, Innovation &amp; Technology), dedicated to building meaningful connections between education, technology, and creativity.">哈佛大学 Learning Design, Innovation &amp; Technology 硕士，致力于在教育、科技与创意之间探索有意义的连接。</p>
+      <a href="#contact" class="hero-cta" data-zh="联系我 →" data-en="Get in Touch →">联系我 →</a>
+    </div>
+    <div class="hero-visual">
+      <div class="avatar-ring">
+        <img src="julia_LA.jpg" alt="Julia Sha" />
+      </div>
+      <div class="float-badge float-badge-1"><span class="badge-dot"></span>Harvard University 2025–2026</div>
+      <div class="float-badge float-badge-2" data-zh="教育 · 技术 · 创意" data-en="Education · Tech · Creativity"><span class="badge-dot"></span>教育 · 技术 · 创意</div>
+    </div>
+    <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+    <div class="hero-visual-mobile">
+      <div class="avatar-ring">
+        <img src="julia_LA.jpg" alt="Julia Sha" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="section-label mono"><span>01</span> <span data-zh="关于我" data-en="About Me">关于我</span></div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p data-zh="我是一名在跨文化语境中成长的学习设计者与组织共创实践者。从清华的国际关系研究，到哈佛的学习设计、创新与技术（Learning Design, Innovation & Technology），我的学习与实践始终围绕一个核心：如何通过有温度的设计，帮助个体成为更完整的自己，让人与人、人与社会建立更真实的连接。" data-en="I am a learning designer and co-creation practitioner with a cross-cultural background. From studying international relations at Tsinghua to Learning Design, Innovation & Technology at Harvard, my learning and practice have centered on one core question: how to help people become more whole, and how to build genuine connections — between people and within society.">我是一名在跨文化语境中成长的学习设计者与组织共创实践者。从清华的国际关系研究，到哈佛的学习设计、创新与技术（Learning Design, Innovation & Technology），我的学习与实践始终围绕一个核心：如何通过有温度的设计，帮助个体成为更完整的自己，让人与人、人与社会建立更真实的连接。</p>
+        <p data-zh="我相信教育的本质，是唤醒内在、激发可能，而不只在于知识传递。我深信，未来的商业应当更有温度，商业向善，才是真正的核心竞争力。" data-en="I believe education is fundamentally about awakening the inner self and enabling possibility — not merely about transmitting knowledge. I'm also convinced that the future of business needs more warmth: business that does good is the only kind that truly lasts.">我相信教育的本质，是唤醒内在、激发可能，而不只在于知识传递。我深信，未来的商业应当更有温度，商业向善，才是真正的核心竞争力。</p>
+        <p data-zh="带着这份理解，我在企业场景里参与推动个人成长与组织创新，将戏剧工作坊与U型理论带入共创场域，也持续探索技术如何为人的成长赋能。" data-en="With this conviction, I work within corporate settings to foster personal growth and organizational innovation — bringing drama workshops and Theory U into collaborative spaces, while exploring how technology can empower human development.">带着这份理解，我在企业场景里参与推动个人成长与组织创新，将戏剧工作坊与U型理论带入共创场域，也持续探索技术如何为人的成长赋能。</p>
+        <p data-zh="我希望在个体成长、组织文化与社会价值之间搭建桥梁，用长期、扎实的行动，让更多人被看见、被理解，让社会变得更包容、更美好。" data-en="I hope to build bridges between individual growth, organizational culture, and social value — through sustained, grounded action that helps more people feel seen, understood, and contributes to a more inclusive and compassionate society.">我希望在个体成长、组织文化与社会价值之间搭建桥梁，用长期、扎实的行动，让更多人被看见、被理解，让社会变得更包容、更美好。</p>
+      </div>
+      <div class="about-stats stagger">
+        <div class="stat-card reveal">
+          <div class="stat-num">5+</div>
+          <div class="stat-label" data-zh="实习经历" data-en="Internships">实习经历</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-num">40+</div>
+          <div class="stat-label" data-zh="KOL 管理" data-en="KOLs Managed">KOL 管理</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-num">15+</div>
+          <div class="stat-label" data-zh="GEO 文章" data-en="GEO Articles">GEO 文章</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-num">2</div>
+          <div class="stat-label" data-zh="顶尖学位" data-en="Top Degrees">顶尖学位</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="section edu-section" id="education">
+    <div class="section-label mono"><span>02</span> Education</div>
+    <h2 class="reveal" data-zh="教育经历" data-en="Academic Background">教育经历</h2>
+    <br/>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-school" data-zh="哈佛大学" data-en="Harvard University">Harvard University</div>
+        <div class="edu-degree" data-zh="学习设计、创新与技术硕士" data-en="Master of Education · Learning Design, Innovation &amp; Technology">Master of Education · Learning Design, Innovation &amp; Technology</div>
+        <div class="edu-period" data-zh="2025 年 8 月 — 2026 年 5 月" data-en="Aug 2025 — May 2026">2025 年 8 月 — 2026 年 5 月</div>
+        <ul class="edu-honors">
+          <li>Graduate School of Education</li>
+          <li data-zh="研究方向：学习体验设计、教育技术" data-en="Focus: Learning Experience Design, Educational Technology">研究方向：学习体验设计、教育技术</li>
+        </ul>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-school" data-zh="清华大学" data-en="Tsinghua University">Tsinghua University</div>
+        <div class="edu-degree" data-zh="社科学院国际关系法学本科" data-en="Bachelor of Law &amp; International Relations · School of Social Sciences">Bachelor of Law &amp; International Relations · School of Social Sciences</div>
+        <div class="edu-period" data-zh="2020 年 9 月 — 2025 年 6 月 · GPA 3.63/4.0" data-en="Sep 2020 — Jun 2025 · GPA 3.63/4.0">2020 年 9 月 — 2025 年 6 月 · GPA 3.63/4.0</div>
+        <ul class="edu-honors">
+          <li data-zh="北京外国留学生奖学金（2021, 2022）" data-en="Beijing International Student Scholarship (2021, 2022)">北京外国留学生奖学金（2021, 2022）</li>
+          <li data-zh="清华大学文艺奖学金（2021, 2022）" data-en="Tsinghua University Arts Scholarship (2021, 2022)">清华大学文艺奖学金（2021, 2022）</li>
+          <li data-zh="清华大学社会实践铜奖（2021）" data-en="Tsinghua Social Practice Bronze Award (2021)">清华大学社会实践铜奖（2021）</li>
+          <li data-zh="加拿大青少年慈善小姐（2018–2019）" data-en="Miss Teen Charity Canada (2018–2019)">加拿大青少年慈善小姐（2018–2019）</li>
+          <li data-zh="美洲青少年论坛演讲嘉宾 · 萨尔瓦多" data-en="Youth Forum Speaker, Americas · El Salvador">美洲青少年论坛演讲嘉宾 · 萨尔瓦多</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section" id="experience">
+    <div class="section-label mono"><span>03</span> Experience</div>
+    <h2 class="reveal" data-zh="实习经历" data-en="Work Experience">实习经历</h2>
+    <br/>
+    <div class="exp-list">
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-company">Indievolve</div>
+          <div class="exp-role" data-zh="HR &amp; 业务运营" data-en="HR &amp; Business Operations">HR &amp; Business Operations</div>
+          <div class="exp-period" data-zh="2025 — 至今" data-en="2025 — Present">2025 — 至今</div>
+          <div class="exp-dots"><div class="exp-dot"></div><div class="exp-dot"></div><div class="exp-dot"></div></div>
+        </div>
+        <div class="exp-content">
+          <h3 data-zh="个性化进化 · HR 全周期实践" data-en="Personalized Evolution · Full-Cycle HR">个性化进化 · HR 全周期实践</h3>
+          <ul class="exp-bullets">
+            <li data-zh="全周期招聘支持，筛选50+份简历，覆盖技术与非技术岗位" data-en="Full-cycle recruiting support, screened 50+ resumes across technical and non-technical roles">全周期招聘支持，筛选50+份简历，覆盖技术与非技术岗位</li>
+            <li data-zh="协调安排20+场面试（笔试至终面），提升候选人体验" data-en="Coordinated 20+ interviews (written tests to final rounds), improving candidate experience">协调安排20+场面试（笔试至终面），提升候选人体验</li>
+            <li data-zh="作为主要负责人策划哈佛 CES 校园招聘会，统筹展位与宣讲" data-en="Led Harvard CES campus recruiting event as primary organizer, coordinating booth and presentations">作为主要负责人策划哈佛 CES 校园招聘会，统筹展位与宣讲</li>
+            <li data-zh="Inspire Class 公益项目负责人，为偏远地区学生提供咨询辅导" data-en="Led Inspire Class nonprofit initiative, providing mentorship to students in underserved communities">Inspire Class 公益项目负责人，为偏远地区学生提供咨询辅导</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-company">Citable · GEO</div>
+          <div class="exp-role" data-zh="生成式引擎优化实习生" data-en="Generative Engine Optimization Intern">生成式引擎优化实习生</div>
+          <div class="exp-period" data-zh="2026 年 1 月 — 3 月" data-en="Jan — Mar 2026">2026 年 1 月 — 3 月</div>
+          <div class="exp-dots"><div class="exp-dot"></div><div class="exp-dot"></div><div class="exp-dot"></div></div>
+        </div>
+        <div class="exp-content">
+          <h3 data-zh="AI 搜索内容策略" data-en="AI Search Content Strategy">AI 搜索内容策略</h3>
+          <ul class="exp-bullets">
+            <li data-zh="撰写并优化15+篇 GEO 文章，成功植入 ChatGPT、Perplexity 等平台" data-en="Wrote and optimized 15+ GEO articles, successfully cited by ChatGPT, Perplexity, and other AI platforms">撰写并优化15+篇 GEO 文章，成功植入 ChatGPT、Perplexity 等平台</li>
+            <li data-zh="主导客户沟通与策略解说，有效提升客户满意度与续约率" data-en="Led client communication and strategy presentations, improving satisfaction and renewal rates">主导客户沟通与策略解说，有效提升客户满意度与续约率</li>
+            <li data-zh="深入调研 DeepSeek 等国内 AI 搜索引擎，产出竞品分析报告" data-en="Researched domestic AI search engines including DeepSeek, producing competitive analysis reports">深入调研 DeepSeek 等国内 AI 搜索引擎，产出竞品分析报告</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-company">The Inner Mountain Foundation</div>
+          <div class="exp-role" data-zh="学习设计师 &amp; 组织发展" data-en="Learning Designer &amp; Org Development">学习设计师 &amp; 组织发展</div>
+          <div class="exp-period" data-zh="2024 年 9 月 — 12 月" data-en="Sep — Dec 2024">2024 年 9 月 — 12 月</div>
+          <div class="exp-dots"><div class="exp-dot"></div><div class="exp-dot"></div><div class="exp-dot"></div></div>
+        </div>
+        <div class="exp-content">
+          <h3 data-zh="戏剧与社区营造" data-en="Drama &amp; Community Building">戏剧与社区营造</h3>
+          <ul class="exp-bullets">
+            <li data-zh="设计并主持戏剧工作坊，通过故事讲述与互动活动营造支持性社区" data-en="Designed and facilitated drama workshops, building supportive communities through storytelling and interactive activities">设计并主持戏剧工作坊，通过故事讲述与互动活动营造支持性社区</li>
+            <li data-zh="结合 U 型理论与自我启示剧场，展现系统性策划与执行能力" data-en="Applied Theory U and Playback Theatre to demonstrate systematic planning and execution capabilities">结合 U 型理论与自我启示剧场，展现系统性策划与执行能力</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-company">Tesla</div>
+          <div class="exp-role" data-zh="对外事务实习生" data-en="External Affairs Intern">对外事务实习生</div>
+          <div class="exp-period" data-zh="2023 年 7 月 — 9 月" data-en="Jul — Sep 2023">2023 年 7 月 — 9 月</div>
+          <div class="exp-dots"><div class="exp-dot"></div><div class="exp-dot"></div><div class="exp-dot"></div></div>
+        </div>
+        <div class="exp-content">
+          <h3 data-zh="品牌传播与公益项目" data-en="Brand Communications &amp; CSR">品牌传播与公益项目</h3>
+          <ul class="exp-bullets">
+            <li data-zh="拓展并维护40+位 KOL 关系，协助完成媒体访谈与内容策略" data-en="Developed and maintained relationships with 40+ KOLs, supporting media interviews and content strategy">拓展并维护40+位 KOL 关系，协助完成媒体访谈与内容策略</li>
+            <li data-zh="统筹特斯拉北京亦庄中心9周年媒体活动，确保活动顺利执行" data-en="Coordinated Tesla Beijing Yizhuang Center's 9th anniversary media event, ensuring smooth execution">统筹特斯拉北京亦庄中心9周年媒体活动，确保活动顺利执行</li>
+            <li data-zh="独立策划并执行10+场社区慈善工作坊，推广可再生能源理念" data-en="Independently planned and executed 10+ community charity workshops promoting renewable energy">独立策划并执行10+场社区慈善工作坊，推广可再生能源理念</li>
+            <li data-zh="参与 HICOOL 峰会执行，协助制定危机管理预案" data-en="Participated in HICOOL Summit execution, assisting in crisis management planning">参与 HICOOL 峰会执行，协助制定危机管理预案</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-company">Perfect World Education</div>
+          <div class="exp-role" data-zh="产品实习生" data-en="Product Intern">产品实习生</div>
+          <div class="exp-period" data-zh="2024 年 8 月 — 9 月" data-en="Aug — Sep 2024">2024 年 8 月 — 9 月</div>
+          <div class="exp-dots"><div class="exp-dot"></div><div class="exp-dot"></div><div class="exp-dot"></div></div>
+        </div>
+        <div class="exp-content">
+          <h3 data-zh="AI + 游戏教育产品" data-en="AI + Game-Based Education">AI + 游戏教育产品</h3>
+          <ul class="exp-bullets">
+            <li data-zh="参与阿里 AI 与游戏设计结合的创新课程项目，协调内容定制" data-en="Contributed to Alibaba AI and game design curriculum project, coordinating content customization">参与阿里 AI 与游戏设计结合的创新课程项目，协调内容定制</li>
+            <li data-zh="引入即兴活动优化音乐课程体验，展现用户洞察与流程改进意识" data-en="Introduced improvisational activities to enhance music curriculum experience, demonstrating user insight and process improvement">引入即兴活动优化音乐课程体验，展现用户洞察与流程改进意识</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-company">Fortive · 福迪威</div>
+          <div class="exp-role" data-zh="市场实习生" data-en="Marketing Intern">市场实习生</div>
+          <div class="exp-period" data-zh="2023 年 3 月 — 6 月" data-en="Mar — Jun 2023">2023 年 3 月 — 6 月</div>
+          <div class="exp-dots"><div class="exp-dot"></div><div class="exp-dot"></div><div class="exp-dot"></div></div>
+        </div>
+        <div class="exp-content">
+          <h3 data-zh="短视频营销 &amp; B2B 传播" data-en="Short Video Marketing &amp; B2B Communications">短视频营销 &amp; B2B 传播</h3>
+          <ul class="exp-bullets">
+            <li data-zh="独立策划、拍摄、剪辑"Julia 的科普小课堂"，两月观看量超2000次" data-en="Independently planned, filmed, and edited 'Julia's Science Class', reaching 2,000+ views in two months">独立策划、拍摄、剪辑"Julia 的科普小课堂"，两月观看量超2000次</li>
+            <li data-zh="运用百度爱采购等 B2B 平台进行搜索引擎营销" data-en="Leveraged B2B platforms including Baidu Aicaigou for search engine marketing">运用百度爱采购等 B2B 平台进行搜索引擎营销</li>
+            <li data-zh="通过内容策略优化，将社交媒体账号参与度提升15%" data-en="Improved social media account engagement by 15% through content strategy optimization">通过内容策略优化，将社交媒体账号参与度提升15%</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section skills-section" id="skills">
+    <div class="section-label mono"><span>04</span> Skills</div>
+    <h2 class="reveal" data-zh="核心能力" data-en="Core Skills">核心能力</h2>
+    <br/>
+    <div class="skills-grid stagger">
+      <div class="skill-card reveal">
+        <div class="skill-icon">🌐</div>
+        <h3 data-zh="语言能力" data-en="Languages">语言能力</h3>
+        <div class="skill-tags">
+          <span class="skill-tag" data-zh="普通话（母语）" data-en="Mandarin (Native)">普通话（母语）</span>
+          <span class="skill-tag" data-zh="英语（母语）" data-en="English (Native)">英语（母语）</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">⚡</div>
+        <h3 data-zh="数字营销" data-en="Digital Marketing">数字营销</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">GEO / AIO</span>
+          <span class="skill-tag" data-zh="内容策略" data-en="Content Strategy">内容策略</span>
+          <span class="skill-tag" data-zh="KOL 管理" data-en="KOL Management">KOL 管理</span>
+          <span class="skill-tag" data-zh="社交媒体增长" data-en="Social Media Growth">社交媒体增长</span>
+          <span class="skill-tag">SEO / SEM</span>
+          <span class="skill-tag" data-zh="B2B 营销" data-en="B2B Marketing">B2B 营销</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🎬</div>
+        <h3 data-zh="内容创作" data-en="Content Creation">内容创作</h3>
+        <div class="skill-tags">
+          <span class="skill-tag" data-zh="短视频策划" data-en="Short Video Production">短视频策划</span>
+          <span class="skill-tag" data-zh="视频剪辑" data-en="Video Editing">视频剪辑</span>
+          <span class="skill-tag">Photoshop</span>
+          <span class="skill-tag" data-zh="内容敏感度" data-en="Content Sensitivity">内容敏感度</span>
+          <span class="skill-tag" data-zh="文案撰写" data-en="Copywriting">文案撰写</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🎭</div>
+        <h3 data-zh="教育与戏剧" data-en="Education &amp; Drama">教育与戏剧</h3>
+        <div class="skill-tags">
+          <span class="skill-tag" data-zh="学习设计" data-en="Learning Design">学习设计</span>
+          <span class="skill-tag" data-zh="戏剧表演与导演" data-en="Drama Performance &amp; Direction">戏剧表演与导演</span>
+          <span class="skill-tag" data-zh="自我启示剧场" data-en="Playback Theatre">自我启示剧场</span>
+          <span class="skill-tag" data-zh="U 型理论" data-en="Theory U">U 型理论</span>
+          <span class="skill-tag" data-zh="组织发展工作坊" data-en="Org Development Workshops">组织发展工作坊</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">💼</div>
+        <h3 data-zh="运营与管理" data-en="Operations &amp; Management">运营与管理</h3>
+        <div class="skill-tags">
+          <span class="skill-tag" data-zh="项目统筹" data-en="Project Coordination">项目统筹</span>
+          <span class="skill-tag" data-zh="跨团队协作" data-en="Cross-team Collaboration">跨团队协作</span>
+          <span class="skill-tag" data-zh="KOL 关系管理" data-en="KOL Relations">KOL 关系管理</span>
+          <span class="skill-tag" data-zh="招聘全周期" data-en="Full-cycle Recruiting">招聘全周期</span>
+          <span class="skill-tag" data-zh="公共演讲" data-en="Public Speaking">公共演讲</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🛠️</div>
+        <h3 data-zh="工具与软件" data-en="Tools &amp; Software">工具与软件</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Microsoft Office</span>
+          <span class="skill-tag">LinkedIn Recruiter</span>
+          <span class="skill-tag" data-zh="BOSS 直聘" data-en="BOSS Zhipin">BOSS 直聘</span>
+          <span class="skill-tag" data-zh="百度爱采购" data-en="Baidu Aicaigou">百度爱采购</span>
+          <span class="skill-tag">DeepSeek / ChatGPT</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact-section" id="contact">
+    <div class="section-label mono"><span>05</span> Contact</div>
+    <h2 class="reveal">Let's <em>Connect</em></h2>
+    <p class="contact-sub reveal" data-zh="如果你对这里的内容有共鸣，也欢迎和我聊聊。" data-en="I'm always open to meaningful conversations and new perspectives.">如果你对这里的内容有共鸣，也欢迎和我聊聊。</p>
+    <div class="contact-links reveal">
+      <a href="mailto:juliasha2024@gmail.com" class="contact-link">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M1 3h12v9H1V3zm0 0l6 5.5L13 3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        juliasha2024@gmail.com
+      </a>
+      <a href="#" class="contact-link">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="1" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M4 7h6M4 4.5h6M4 9.5h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        WeChat: s1637545073
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Julia Sha 沙雨薇</span>
+  </footer>
+
+  <script>
+    // ── Language Switch ──────────────────────────────────────────────
+    let currentLang = 'zh';
+
+    function setLang(lang) {
+      currentLang = lang;
+      // Sync all language buttons
+      ['btn-zh','btn-en','btn-zh-m','btn-en-m'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('active', id.includes(lang));
+      });
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+      document.querySelectorAll('[data-zh][data-en]').forEach(el => {
+        const val = el.getAttribute('data-' + lang);
+        if (!val) return;
+        // For elements that contain child nodes (e.g. SVG inside .hero-cta), only update text nodes
+        if (el.querySelector('svg')) {
+          // Replace only the text node before the SVG
+          const textNode = [...el.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+          if (textNode) textNode.textContent = val + ' ';
+        } else {
+          el.innerHTML = val;
+        }
+      });
+    }
+
+    // ── Scroll Reveal ────────────────────────────────────────────────
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: .12 });
+    reveals.forEach(el => io.observe(el));
+
+    // ── Navbar on scroll ─────────────────────────────────────────────
+    const nav = document.getElementById('navbar');
+    const progressBar = document.getElementById('progress-bar');
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+
+      // Reading progress bar
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+
+      // Active nav link based on section in view
+      let current = '';
+      sections.forEach(section => {
+        if (scrollTop >= section.offsetTop - 120) current = section.id;
+      });
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+    }, { passive: true });
+
+    // Language toggle initialization
+    setLang('zh');
+
+    // Mobile hamburger menu
+    const hamburger = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileNav = document.getElementById('mobileNav');
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', open);
+        mobileNav.classList.toggle('open', open);
+      });
+      // Close menu on link click
+      mobileMenu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          mobileNav.classList.remove('open');
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>
